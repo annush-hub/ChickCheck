@@ -1,5 +1,6 @@
 using Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,5 +29,21 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+
+try
+{
+    var context = services.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+}
+catch (SystemException ex)
+{
+    var logger = services.GetRequiredService<ILogger>();
+    logger.LogError(ex, "An error occured during migration");
+}
+
 
 app.Run();
