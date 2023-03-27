@@ -16,6 +16,5 @@ namespace Domain
         public float TemperatureInFahrenheit { get; set; }   
         public bool IsDeactivated { get; set; }
 
-        public Guid ProductId { get; set; }
     }
 }
