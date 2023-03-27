@@ -13,7 +13,8 @@ namespace Domain
         public string Name { get; set; }
         public string Description { get; set; }
         public float TemperatureInCelsius { get; set; }
-        public float TemperatureInFahrenheit { get; set; }      
+        public float TemperatureInFahrenheit { get; set; }   
+        public bool IsDeactivated { get; set; }
 
         public Guid ProductId { get; set; }
     }
