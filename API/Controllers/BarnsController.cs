@@ -1,4 +1,4 @@
-﻿using Application.Activities;
+﻿using Application.Barns;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
