@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using System.Diagnostics;
 
 namespace API.Controllers
 {
@@ -23,6 +24,12 @@ namespace API.Controllers
         public async Task<ActionResult<Barn>> GetBarn(Guid id)
         {
             return await Mediator.Send(new BarnDetails.Query { Id = id});
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBarn(Barn barn)
+        {
+            return Ok(await Mediator.Send(new CreateBarn.Command { Barn = barn }));
         }
     }
 }
