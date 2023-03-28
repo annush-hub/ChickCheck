@@ -10,19 +10,13 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class BarnsController : ControllerBase
+    public class BarnsController : BaseApiController
     {
-        private readonly IMediator _mediator;
-
-        public BarnsController(AppDbContext context, IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpGet]
         public async Task<ActionResult<List<Barn>>> GetBarns() 
         {
-            return await _mediator.Send(new BarnList.Query());
+            return await Mediator.Send(new BarnList.Query());
         }
 
         [HttpGet("{id}")]
