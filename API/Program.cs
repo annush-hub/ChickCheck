@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using MediatR;
-using Application.Activities;
+using Application.Barns;
 
 var builder = WebApplication.CreateBuilder(args);
 
