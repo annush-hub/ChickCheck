@@ -31,5 +31,12 @@ namespace API.Controllers
         {
             return Ok(await Mediator.Send(new CreateBarn.Command { Barn = barn }));
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBarn(Guid id, Barn barn)
+        {
+            barn.Id = id;
+            return Ok(await Mediator.Send(new UpdateBarn.Command { Barn = barn }));
+        }
     }
 }

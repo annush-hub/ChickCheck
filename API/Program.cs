@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 using MediatR;
 using Application.Barns;
+using Application.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,7 @@ builder.Services.AddCors(opt => {
 });
 
 builder.Services.AddMediatR(typeof(BarnList.Handler));
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 var app = builder.Build();
 
