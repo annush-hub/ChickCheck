@@ -15,6 +15,7 @@ namespace Domain
         public float TemperatureInCelsius { get; set; }
         public float TemperatureInFahrenheit { get; set; }   
         public bool IsDeactivated { get; set; }
-
+        public Guid EggGradeId { get; set; }
+        public EggGrade? EggGrade { get; set; }
     }
 }

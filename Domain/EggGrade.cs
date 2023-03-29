@@ -9,7 +9,9 @@ namespace Domain
 {
     public class EggGrade : BaseEntity
     {
-        public string? GradeUA { get; set; }
-        public string? GradeEU { get; set; }
+        public string GradeUA { get; set; }
+        public string GradeEU { get; set; }
+
+        public ICollection<Barn> Barns { get; set; } = new List<Barn>();
     }
 }

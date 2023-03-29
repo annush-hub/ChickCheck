@@ -12,54 +12,90 @@ namespace Persistence
     {
         public static async Task SeedData(AppDbContext context)
         {
-            if (context.Barns.Any()) return;
-
-            var barns = new List<Barn>
+            if (!context.EggGrades.Any())
             {
-                new Barn
+                var eggGrades = new List<EggGrade>
                 {
-                    Name = "Barn 1",
-                    Description = "Barn with M eggs",
-                    TemperatureInCelsius = 19f,
-                    TemperatureInFahrenheit = 66.2f,
-                    IsDeactivated = false,
-                },
-                new Barn
-                {
-                    Name = "Barn 2",
-                    Description = "Barn with L eggs",
-                    TemperatureInCelsius = 21f,
-                    TemperatureInFahrenheit = 69.8f,
-                    IsDeactivated = false,
-                },
-                new Barn
-                {
-                    Name = "Barn 3",
-                    Description = "Barn with L eggs",
-                    TemperatureInCelsius = 18f,
-                    TemperatureInFahrenheit = 64.4f,
-                    IsDeactivated = false,
-                },
-                new Barn
-                {
-                    Name = "Barn 4",
-                    Description = "Barn with S eggs",
-                    TemperatureInCelsius = 21f,
-                    TemperatureInFahrenheit = 69.8f,
-                    IsDeactivated = false,
-                },
-                new Barn
-                {
-                    Name = "Barn 5",
-                    Description = "Barn with XL eggs",
-                    TemperatureInCelsius = 20f,
-                    TemperatureInFahrenheit = 68f,
-                    IsDeactivated = false,
-                }
-            };
+                    new EggGrade
+                    {
+                        GradeUA = "СВ",
+                        GradeEU = "XL"
+                    },
+                    new EggGrade
+                    {
+                        GradeUA = "С0",
+                        GradeEU = "L"
+                    },
+                    new EggGrade
+                    {
+                        GradeUA = "С1",
+                        GradeEU = "M"
+                    },
+                    new EggGrade
+                    {
+                        GradeUA = "С2",
+                        GradeEU = "S"
+                    },
+                };
+                await context.EggGrades.AddRangeAsync(eggGrades);
+            }
 
-            await context.Barns.AddRangeAsync(barns);
-            await context.SaveChangesAsync();
+            if (!context.Barns.Any() )
+            {
+
+                var barns = new List<Barn>
+                {
+                    new Barn
+                    {
+                        Name = "Barn 1",
+                        Description = "Barn with M eggs",
+                        TemperatureInCelsius = 19f,
+                        TemperatureInFahrenheit = 66.2f,
+                        IsDeactivated = false,
+                        EggGradeId = Guid.Parse("8CE5787A-0EE5-49C9-05B9-08DB308933AF"),
+                    },
+                    new Barn
+                    {
+                        Name = "Barn 2",
+                        Description = "Barn with L eggs",
+                        TemperatureInCelsius = 21f,
+                        TemperatureInFahrenheit = 69.8f,
+                        IsDeactivated = false,
+                        EggGradeId = Guid.Parse("392D4044-47AA-47D0-05BB-08DB308933AF"),
+                    },
+                    new Barn
+                    {
+                        Name = "Barn 3",
+                        Description = "Barn with L eggs",
+                        TemperatureInCelsius = 18f,
+                        TemperatureInFahrenheit = 64.4f,
+                        IsDeactivated = false,
+                        EggGradeId = Guid.Parse("6C4D97B0-C0E0-441D-05BA-08DB308933AF"),
+                    },
+                    new Barn
+                    {
+                        Name = "Barn 4",
+                        Description = "Barn with S eggs",
+                        TemperatureInCelsius = 21f,
+                        TemperatureInFahrenheit = 69.8f,
+                        IsDeactivated = false,
+                        EggGradeId = Guid.Parse("1615F6EC-E1E9-410C-05BC-08DB308933AF"),
+                    },
+                    new Barn
+                    {
+                        Name = "Barn 5",
+                        Description = "Barn with XL eggs",
+                        TemperatureInCelsius = 20f,
+                        TemperatureInFahrenheit = 68f,
+                        IsDeactivated = false,
+                        EggGradeId = Guid.Parse("6C4D97B0-C0E0-441D-05BA-08DB308933AF"),
+                    }
+                };
+
+                await context.Barns.AddRangeAsync(barns);
+                await context.SaveChangesAsync();
+
+            }                     
         }
     }
 }

@@ -16,5 +16,16 @@ namespace Persistence
         }
 
         public DbSet<Barn> Barns { get; set; }
+        public DbSet<EggGrade> EggGrades { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Barn>()
+               .HasOne(eg => eg.EggGrade)
+               .WithMany(b => b.Barns)
+               .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
