@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Product : BaseEntity
+    public class EggGrade : BaseEntity
     {
         public string? GradeUA { get; set; }
         public string? GradeEU { get; set; }
-
     }
 }
