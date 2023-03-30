@@ -17,13 +17,13 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Barn>>> GetBarns() 
         {
-            return Ok (await Mediator.Send(new BarnList.Query()));
+            return Ok(await Mediator.Send(new BarnList.Query()));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Barn>> GetBarn(Guid id)
         {
-            return await Mediator.Send(new BarnDetails.Query { Id = id});
+            return Ok(await Mediator.Send(new BarnDetails.Query { Id = id}));
         }
 
         [HttpPost]
