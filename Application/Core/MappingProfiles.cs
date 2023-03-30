@@ -15,7 +15,9 @@ namespace Application.Core
 
             CreateMap<Barn, BarnDto>()
                 .ForMember(d => d.EggGradeEU, o => o.MapFrom(src => src.EggGrade.GradeEU))
-                .ForMember(d => d.EggGradeUA, o => o.MapFrom(src => src.EggGrade.GradeUA));
+                .ForMember(d => d.EggGradeUA, o => o.MapFrom(src => src.EggGrade.GradeUA))
+                .ForMember(d => d.Feeders,
+                o => o.MapFrom(src => src.Feeders.ToList()));
 
             CreateMap<EggGrade, EggGradeDto>()
                 .ForMember(d => d.Barns,
