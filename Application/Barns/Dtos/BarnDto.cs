@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Feeders;
+using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,6 @@ namespace Application.Barns.Dtos
         public bool IsDeactivated { get; set; }
         public string EggGradeUA { get; set; }
         public string EggGradeEU { get; set; }
+        public ICollection<FeederDto> Feeders { get; set; }
     }
 }
