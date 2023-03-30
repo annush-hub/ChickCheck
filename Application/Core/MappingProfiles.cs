@@ -21,18 +21,6 @@ namespace Application.Core
                 .ForMember(d => d.Barns,
                 o => o.MapFrom(src => src.Barns.ToList()));
 
-            CreateMap<UpdateBarnDto, Barn>()
-                .ForMember(d => d.Name, o => o.MapFrom(src => src.Name))
-                .ForMember(d => d.Description, o => o.MapFrom(src => src.Description))
-                .ForMember(d => d.Description, o => o.MapFrom(src => src.Description))
-                .ForMember(d => d.TemperatureInCelsius, o => o.MapFrom(src => src.TemperatureInCelsius))
-                .ForMember(d => d.TemperatureInFahrenheit, o => o.MapFrom(src => src.TemperatureInFahrenheit))
-                .ForMember(d => d.IsDeactivated, o => o.MapFrom(src => src.IsDeactivated))
-                .ForMember(d => d.EggGradeId, o => o.MapFrom(src => src.EggGradeId));
-
-            //CreateMap<Feeder, UpdateFeederDto>()
-            //    .ForMember(d => d.Barn, o => o.MapFrom(src => src.Barn));
-
             CreateMap<Feeder, FeederDto>()
                 .ForMember(d => d.BarnId, o => o.MapFrom(src => src.Barn.Id));
 
@@ -41,18 +29,6 @@ namespace Application.Core
                 .ForMember(d => d.Fullness, o => o.MapFrom(src => src.Fullness))
                 .ForMember(d => d.IsInUse, o => o.MapFrom(src => src.IsInUse))
                 .ForMember(d => d.BarnId, o => o.MapFrom(src => src.BarnId));
-
-
-            //    .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
-            //    .ForMember(d => d.Bio, o => o.MapFrom(s => s.AppUser.Bio))
-            //    .ForMember(d => d.Image, o => o.MapFrom(S => S.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url));
-
-            //CreateMap<ActivityAttendee, AttendeeDto>()
-            //    .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
-            //    .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
-            //    .ForMember(d => d.Bio, o => o.MapFrom(s => s.AppUser.Bio))
-            //    .ForMember(d => d.Image, o => o.MapFrom(S => S.AppUser.Photos.FirstOrDefault(x => x.IsMain).Url));
-
         }
     }
 }
