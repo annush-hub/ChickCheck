@@ -1,5 +1,6 @@
 ﻿using Application.Barns.Dtos;
 using Application.EggGrades;
+using Application.Feeders;
 using AutoMapper;
 using Domain;
 using System.Diagnostics;
@@ -28,6 +29,19 @@ namespace Application.Core
                 .ForMember(d => d.TemperatureInFahrenheit, o => o.MapFrom(src => src.TemperatureInFahrenheit))
                 .ForMember(d => d.IsDeactivated, o => o.MapFrom(src => src.IsDeactivated))
                 .ForMember(d => d.EggGradeId, o => o.MapFrom(src => src.EggGradeId));
+
+            //CreateMap<Feeder, UpdateFeederDto>()
+            //    .ForMember(d => d.Barn, o => o.MapFrom(src => src.Barn));
+
+            CreateMap<Feeder, FeederDto>()
+                .ForMember(d => d.BarnId, o => o.MapFrom(src => src.Barn.Id));
+
+            CreateMap<FeederDto, Feeder>()
+                .ForMember(d => d.Capacity, o => o.MapFrom(src => src.Capacity))
+                .ForMember(d => d.Fullness, o => o.MapFrom(src => src.Fullness))
+                .ForMember(d => d.IsInUse, o => o.MapFrom(src => src.IsInUse))
+                .ForMember(d => d.BarnId, o => o.MapFrom(src => src.BarnId));
+
 
             //    .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
             //    .ForMember(d => d.Bio, o => o.MapFrom(s => s.AppUser.Bio))
