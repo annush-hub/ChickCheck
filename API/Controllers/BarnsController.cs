@@ -17,7 +17,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Barn>>> GetBarns() 
         {
-            return await Mediator.Send(new BarnList.Query());
+            return Ok (await Mediator.Send(new BarnList.Query()));
         }
 
         [HttpGet("{id}")]
