@@ -19,6 +19,8 @@ namespace Application.Core
                 .ForMember(d => d.Feeders,
                 o => o.MapFrom(src => src.Feeders.ToList()));
 
+            CreateMap<Barn, BarnShortDto>();
+
             CreateMap<EggGrade, EggGradeDto>()
                 .ForMember(d => d.Barns,
                 o => o.MapFrom(src => src.Barns.ToList()));
