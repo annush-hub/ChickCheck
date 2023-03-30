@@ -14,6 +14,6 @@ namespace Application.EggGrades
         public string GradeUA { get; set; }
         public string GradeEU { get; set; }
 
-        public ICollection<BarnDto> Barns { get; set; }
+        public ICollection<BarnShortDto> Barns { get; set; }
     }
 }
