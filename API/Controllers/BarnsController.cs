@@ -27,7 +27,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateBarn(Barn barn)
+        public async Task<IActionResult> CreateBarn([FromBody] CreateBarnDto barn)
         {
             return Ok(await Mediator.Send(new CreateBarn.Command { Barn = barn }));
         }
