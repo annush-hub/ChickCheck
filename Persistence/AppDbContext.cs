@@ -17,6 +17,7 @@ namespace Persistence
 
         public DbSet<Barn> Barns { get; set; }
         public DbSet<EggGrade> EggGrades { get; set; }
+        public DbSet<Feeder> Feeders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +27,11 @@ namespace Persistence
                .HasOne(eg => eg.EggGrade)
                .WithMany(b => b.Barns)
                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Feeder>()
+               .HasOne(b=> b.Barn)
+               .WithMany(f => f.Feeders)
+               .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

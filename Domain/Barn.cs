@@ -17,5 +17,6 @@ namespace Domain
         public bool IsDeactivated { get; set; }
         public Guid EggGradeId { get; set; }
         public EggGrade? EggGrade { get; set; }
+        public ICollection<Feeder> Feeders { get; set; } = new List<Feeder>();
     }
 }
