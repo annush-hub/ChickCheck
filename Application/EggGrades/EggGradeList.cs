@@ -1,31 +1,34 @@
-﻿using Domain;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.EggGrades
 {
     public class EggGradeList
     {
-        public class Query : IRequest<List<EggGrade>> { }
+        public class Query : IRequest<List<EggGradeDto>> { }
 
-        public class Handler : IRequestHandler<Query, List<EggGrade>>
+        public class Handler : IRequestHandler<Query, List<EggGradeDto>>
         {
             private readonly AppDbContext _context;
+            private readonly IMapper _mapper;
 
-            public Handler(AppDbContext context)
+            public Handler(AppDbContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
-            public async Task<List<EggGrade>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<EggGradeDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.EggGrades.ToListAsync();
+                var eggGrades = await _context.EggGrades
+                    .ProjectTo<EggGradeDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken: cancellationToken);
+
+                return eggGrades;
             }
         }
     }
