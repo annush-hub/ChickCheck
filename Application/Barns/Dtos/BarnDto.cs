@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Barns
+namespace Application.Barns.Dtos
 {
     public class BarnDto
     {

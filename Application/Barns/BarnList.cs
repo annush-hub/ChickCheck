@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Barns.Dtos;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

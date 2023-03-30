@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Barns.Dtos;
+using Domain;
 using MediatR;
 using Persistence;
 using System;

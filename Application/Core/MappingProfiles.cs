@@ -1,5 +1,4 @@
-﻿using Application.Barns;
-using Application.Barns.Dtos;
+﻿using Application.Barns.Dtos;
 using Application.EggGrades;
 using AutoMapper;
 using Domain;

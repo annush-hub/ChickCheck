@@ -1,4 +1,4 @@
-﻿using Application.Barns;
+﻿using Application.Barns.Dtos;
 using Domain;
 using System;
 using System.Collections.Generic;
