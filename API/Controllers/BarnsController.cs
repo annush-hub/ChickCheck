@@ -34,7 +34,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBarn(Guid id, [FromBody] UpdateBarnDto barn)
+        public async Task<IActionResult> UpdateBarn(Guid id, [FromBody] CreateBarnDto barn)
         {
             barn.Id = id;
             return Ok(await Mediator.Send(new UpdateBarn.Command { Barn = barn }));
