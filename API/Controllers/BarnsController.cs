@@ -1,4 +1,5 @@
 ﻿using Application.Barns;
+using Application.Barns.Dtos;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBarn(Guid id, Barn barn)
+        public async Task<IActionResult> UpdateBarn(Guid id, [FromBody] UpdateBarnDto barn)
         {
             barn.Id = id;
             return Ok(await Mediator.Send(new UpdateBarn.Command { Barn = barn }));
