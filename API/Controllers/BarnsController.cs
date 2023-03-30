@@ -15,15 +15,15 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<List<Barn>>> GetBarns() 
+        public async Task<ActionResult<List<BarnDto>>> GetBarns() 
         {
-            return Ok(await Mediator.Send(new BarnList.Query()));
+            return await Mediator.Send(new BarnList.Query());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Barn>> GetBarn(Guid id)
+        public async Task<ActionResult<BarnDto>> GetBarn(Guid id)
         {
-            return Ok(await Mediator.Send(new BarnDetails.Query { Id = id}));
+            return await Mediator.Send(new BarnDetails.Query { Id = id});
         }
 
         [HttpPost]
