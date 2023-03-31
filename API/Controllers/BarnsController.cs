@@ -1,7 +1,9 @@
 ﻿using Application.Barns;
 using Application.Barns.Dtos;
+using Application.Storages;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -21,6 +23,7 @@ namespace API.Controllers
             return await Mediator.Send(new BarnList.Query());
         }
 
+        //[Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<BarnDto>> GetBarn(Guid id)
         {
@@ -45,5 +48,19 @@ namespace API.Controllers
         {
             return Ok(await Mediator.Send(new DeleteBarn.Command { Id = id }));
         }
+
+        [HttpPost("{id}/addCleaning")]
+        public async Task<IActionResult> CreateBarnCleaning(Guid id, [FromBody] CleaningDto cleaning)
+        {
+            return Ok(await Mediator.Send(new CreateBarnCleaning.Command { AppUserId = cleaning.AppUserId, BarnId = id }));
+        }
+
+        [HttpGet("{id}/getCleanings")]
+        public async Task<IActionResult> GetBarnCleanings(Guid id)
+        {
+            return Ok(await Mediator.Send(new BarnCleaningList.Query { BarnId = id }));
+        }
+
+
     }
 }
