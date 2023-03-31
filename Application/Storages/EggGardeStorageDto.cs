@@ -9,6 +9,5 @@ namespace Application.Storages
     public class EggGardeStorageDto
     {
         public Guid EggGradeId { get; set; }
-        //public Guid StorageId { get; set; }
     }
 }
