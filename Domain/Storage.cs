@@ -12,7 +12,7 @@ namespace Domain
         public string Name { get; set; }
         public string City { get; set; }
         public string Region { get; set; }
-        public int IsWorking { get; set; }
+        public bool IsWorking { get; set; }
         public ICollection<EggGradeStorage> EggGrades { get; set; } = new List<EggGradeStorage>();
     }
 }
