@@ -49,5 +49,11 @@ namespace API.Controllers
         {
             return Ok(await Mediator.Send(new CreateEggGradeStorage.Command { EggGradeId = eggGradeStorage.EggGradeId, StorageId = id }));
         }
+
+        [HttpDelete("{id}/deleteEggGrade")]
+        public async Task<IActionResult> DeleteEggGradeStorage(Guid id, [FromBody] EggGardeStorageDto eggGradeStorage)
+        {
+            return Ok(await Mediator.Send(new DeleteEggGradeStorage.Command { EggGradeId = eggGradeStorage.EggGradeId, StorageId = id }));
+        }
     }
 }
