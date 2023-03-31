@@ -126,14 +126,14 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if (await _roleManager.RoleExistsAsync(UserRole.Admin.ToString()))
+            if (!await _roleManager.RoleExistsAsync(UserRole.Admin.ToString()))
             {
-                await _userManager.CreateAsync(user, UserRole.Admin.ToString());
+                await _roleManager.CreateAsync(new IdentityRole(UserRole.Admin.ToString()));
             }
 
-            if (await _roleManager.RoleExistsAsync(UserRole.User.ToString()))
+            if (!await _roleManager.RoleExistsAsync(UserRole.User.ToString()))
             {
-                await _userManager.CreateAsync(user, UserRole.User.ToString());
+                await _roleManager.CreateAsync(new IdentityRole(UserRole.User.ToString()));
             }
 
             if (await _roleManager.RoleExistsAsync(UserRole.Admin.ToString()))
