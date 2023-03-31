@@ -54,6 +54,8 @@ namespace Application.Core
             CreateMap<Storage, StorageDetailedDto>()
                 .ForMember(d => d.EggGrades,
                 o => o.MapFrom(src => src.EggGrades.ToList()));
+
+            CreateMap<EggGardeStorageDto, EggGradeStorage>();
         }
     }
 }
