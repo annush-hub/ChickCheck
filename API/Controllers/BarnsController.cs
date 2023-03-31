@@ -66,5 +66,11 @@ namespace API.Controllers
         {
             return Ok(await Mediator.Send(new BarnLastCleaning.Query { BarnId = id }));
         }
+
+        [HttpGet("{id}/getCleaningCounter")]
+        public async Task<IActionResult> GetBarnCleaningCounter(Guid id)
+        {
+            return Ok(await Mediator.Send(new BarnCleaningCounter.Query { BarnId = id }));
+        }
     }
 }
