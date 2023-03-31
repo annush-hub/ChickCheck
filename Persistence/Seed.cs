@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,8 +11,41 @@ namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(AppDbContext context)
+        public static async Task SeedData(AppDbContext context, UserManager<AppUser> userManager)
         {
+            if (!userManager.Users.Any())
+            {
+                var users = new List<AppUser>()
+                {
+                    new AppUser()
+                    {
+                        DisplayName = "Bob",
+                        Bio = "hi",
+                        UserName = "bob",
+                        Email = "bob@test.com"
+                    },
+                    new AppUser()
+                    {
+                        DisplayName = "Mary",
+                        Bio = "hi",
+                        UserName = "mary",
+                        Email = "mary@test.com"
+                    },
+                    new AppUser()
+                    {
+                        DisplayName = "Jane",
+                        Bio = "hi",
+                        UserName = "jane",
+                        Email = "jane@test.com"
+                    },
+                };
+
+                foreach (var user in users)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+            }
+
             if (!context.EggGrades.Any())
             {
                 var eggGrades = new List<EggGrade>

@@ -2,6 +2,7 @@ using Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using API.Extensions;
+using Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,8 +34,9 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<AppDbContext>();
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context);
+    await Seed.SeedData(context, userManager);
 }
 catch (SystemException ex)
 {
