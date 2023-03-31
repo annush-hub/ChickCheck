@@ -1,6 +1,7 @@
 ﻿using Application.Barns.Dtos;
 using Application.EggGrades;
 using Application.Feeders;
+using Application.Storages;
 using AutoMapper;
 using Domain;
 using System.Diagnostics;
@@ -33,6 +34,17 @@ namespace Application.Core
                 .ForMember(d => d.Fullness, o => o.MapFrom(src => src.Fullness))
                 .ForMember(d => d.IsInUse, o => o.MapFrom(src => src.IsInUse))
                 .ForMember(d => d.BarnId, o => o.MapFrom(src => src.BarnId));
+
+            CreateMap<EggGradeStorage, EggGradeShortDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(src => src.EggGradeId))
+                .ForMember(d => d.GradeUA, o => o.MapFrom(src => src.EggGrade.GradeUA))
+                .ForMember(d => d.GradeEU, o => o.MapFrom(src => src.EggGrade.GradeEU));
+
+            CreateMap<StorageDto, Storage>();
+
+            CreateMap<Storage, StorageDetailedDto>()
+                .ForMember(d => d.EggGrades,
+                o => o.MapFrom(src => src.EggGrades.ToList()));
         }
     }
 }
