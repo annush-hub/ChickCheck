@@ -2,6 +2,7 @@
 using API.Services;
 using Domain;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -157,6 +158,28 @@ namespace API.Controllers
             }
 
             return BadRequest(result.Errors);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+
+            if (user is null)
+            {
+                return BadRequest("User is not found");
+            }
+            var rolesForUser = await _userManager.GetRolesAsync(user);
+            if (rolesForUser.Count() > 0)
+            {
+                foreach (var item in rolesForUser.ToList())
+                {
+                    var result = await _userManager.RemoveFromRoleAsync(user, item);
+                }
+            }
+
+            return Ok(await _userManager.DeleteAsync(user));
         }
     }
 }
