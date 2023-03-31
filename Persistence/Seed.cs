@@ -92,10 +92,29 @@ namespace Persistence
                     }
                 };
 
-                await context.Barns.AddRangeAsync(barns);
-                await context.SaveChangesAsync();
+                await context.Barns.AddRangeAsync(barns);              
 
-            }                     
+            }
+
+            if (!context.EggGradeStorages.Any())
+            {
+                var eggGradeStorages = new List<EggGradeStorage>
+                    {
+                        new EggGradeStorage
+                        {
+                            EggGradeId = Guid.Parse("6C4D97B0-C0E0-441D-05BA-08DB308933AF"),
+                            StorageId = Guid.Parse("CFDEF7BC-268B-40CE-F838-08DB31B3C6F5"),
+                        },
+                        new EggGradeStorage
+                        {
+                            EggGradeId = Guid.Parse("6C4D97B0-C0E0-441D-05BA-08DB308933AF"),
+                            StorageId = Guid.Parse("3CABFEDA-2F28-417D-73C9-08DB31B38F55"),
+                        },
+                    };
+
+                await context.EggGradeStorages.AddRangeAsync(eggGradeStorages);
+            }
+            await context.SaveChangesAsync();
         }
     }
 }
