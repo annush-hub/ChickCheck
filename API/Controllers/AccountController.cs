@@ -1,6 +1,7 @@
 ﻿using API.Dtos;
 using API.Services;
 using Domain;
+using Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -50,6 +51,54 @@ namespace API.Controllers
                 };
             }
             return Unauthorized();
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public async Task<ActionResult<UserAuthDto>> Register([FromBody] RegisterDto registerDto)
+        {
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
+            {
+                ModelState.AddModelError("username", "Username is already taken!");
+                return ValidationProblem();
+            }
+
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
+            {
+                ModelState.AddModelError("email", "Email is already taken!");
+                return ValidationProblem();
+            }
+
+            var user = new AppUser
+            {
+                DisplayName = registerDto.DisplayName,
+                Email = registerDto.Email,
+                UserName = registerDto.Username
+            };
+
+            if (await _roleManager.RoleExistsAsync(UserRole.User.ToString()))
+            {
+                await _userManager.AddToRoleAsync(user, UserRole.User.ToString());
+            }
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (result.Succeeded)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+
+                var token = _tokenService.CreateToken(user, userRoles);
+
+                return new UserAuthDto
+                {
+                    DisplayName = user.DisplayName,
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    Username = user.UserName,
+                    Expiration = token.ValidTo
+                };
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }
