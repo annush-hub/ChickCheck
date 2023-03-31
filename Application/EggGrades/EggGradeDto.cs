@@ -1,4 +1,5 @@
 ﻿using Application.Barns.Dtos;
+using Application.Storages;
 using Domain;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Application.EggGrades
         public string GradeEU { get; set; }
 
         public ICollection<BarnShortDto> Barns { get; set; }
+        public ICollection<StorageDto> Storages { get; set; }
     }
 }
