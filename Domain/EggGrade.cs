@@ -13,5 +13,6 @@ namespace Domain
         public string GradeEU { get; set; }
 
         public ICollection<Barn> Barns { get; set; } = new List<Barn>();
+        public ICollection<EggGradeStorage> Storages { get; set; } = new List<EggGradeStorage>();
     }
 }
