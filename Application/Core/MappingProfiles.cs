@@ -24,7 +24,9 @@ namespace Application.Core
 
             CreateMap<EggGrade, EggGradeDto>()
                 .ForMember(d => d.Barns,
-                o => o.MapFrom(src => src.Barns.ToList()));
+                o => o.MapFrom(src => src.Barns.ToList()))
+                .ForMember(d => d.Storages,
+                o => o.MapFrom(src => src.Storages.ToList()));
 
             CreateMap<Feeder, FeederDto>()
                 .ForMember(d => d.BarnId, o => o.MapFrom(src => src.Barn.Id));
@@ -39,6 +41,13 @@ namespace Application.Core
                 .ForMember(d => d.Id, o => o.MapFrom(src => src.EggGradeId))
                 .ForMember(d => d.GradeUA, o => o.MapFrom(src => src.EggGrade.GradeUA))
                 .ForMember(d => d.GradeEU, o => o.MapFrom(src => src.EggGrade.GradeEU));
+
+            CreateMap<EggGradeStorage, StorageDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(src => src.StorageId))
+                .ForMember(d => d.Name, o => o.MapFrom(src => src.Storage.Name))
+                .ForMember(d => d.City, o => o.MapFrom(src => src.Storage.City))
+                .ForMember(d => d.Region, o => o.MapFrom(src => src.Storage.Region))
+                .ForMember(d => d.IsWorking, o => o.MapFrom(src => src.Storage.IsWorking));
 
             CreateMap<StorageDto, Storage>();
 
