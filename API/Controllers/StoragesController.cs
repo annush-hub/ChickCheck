@@ -2,6 +2,7 @@
 using Application.EggGrades;
 using Application.Feeders;
 using Application.Storages;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,12 @@ namespace API.Controllers
         public async Task<IActionResult> DeleteStorage(Guid id)
         {
             return Ok(await Mediator.Send(new DeleteStorage.Command { Id = id }));
+        }
+
+        [HttpPost("{id}/addEggGrade")]
+        public async Task<IActionResult> CreateEggGradeStorage(Guid id, [FromBody] EggGardeStorageDto eggGradeStorage)
+        {
+            return Ok(await Mediator.Send(new CreateEggGradeStorage.Command { EggGradeId = eggGradeStorage.EggGradeId, StorageId = id }));
         }
     }
 }
