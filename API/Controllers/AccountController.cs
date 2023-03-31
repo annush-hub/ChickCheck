@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Linq;
 
 namespace API.Controllers
 {
@@ -43,13 +44,7 @@ namespace API.Controllers
 
                 var token = _tokenService.CreateToken(user, userRoles);
 
-                return new UserAuthDto
-                {
-                    DisplayName = user.DisplayName,
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Username = user.UserName,
-                    Expiration = token.ValidTo
-                };
+                return CreateUserObject(user, token);
             }
             return Unauthorized();
         }
@@ -102,13 +97,7 @@ namespace API.Controllers
 
                 var token = _tokenService.CreateToken(user, userRoles);
 
-                return new UserAuthDto
-                {
-                    DisplayName = user.DisplayName,
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Username = user.UserName,
-                    Expiration = token.ValidTo
-                };
+                return CreateUserObject(user, token);
             }
 
             return BadRequest(result.Errors);
@@ -157,13 +146,7 @@ namespace API.Controllers
 
                 var token = _tokenService.CreateToken(user, userRoles);
 
-                return new UserAuthDto
-                {
-                    DisplayName = user.DisplayName,
-                    Token = new JwtSecurityTokenHandler().WriteToken(token),
-                    Username = user.UserName,
-                    Expiration = token.ValidTo
-                };
+                return CreateUserObject(user, token);
             }
 
             return BadRequest(result.Errors);
@@ -189,6 +172,30 @@ namespace API.Controllers
             }
 
             return Ok(await _userManager.DeleteAsync(user));
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserAuthDto>> GetCurrentUser()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var token = _tokenService.CreateToken(user, userRoles);
+
+            return CreateUserObject(user, token);
+
+        }
+
+        private UserAuthDto CreateUserObject(AppUser user, JwtSecurityToken token)
+        {
+            return new UserAuthDto
+            {
+                DisplayName = user.DisplayName,
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Username = user.UserName,
+                Expiration = token.ValidTo
+            };
         }
     }
 }
