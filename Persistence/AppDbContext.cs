@@ -21,6 +21,7 @@ namespace Persistence
         public DbSet<Feeder> Feeders { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<EggGradeStorage> EggGradeStorages { get; set; }
+        public DbSet<Cleaning> Cleanings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,6 +50,18 @@ namespace Persistence
                .HasOne(s => s.Storage)
                .WithMany(eg => eg.EggGrades)
                .HasForeignKey(ss => ss.StorageId);
+
+            builder.Entity<Cleaning>()
+                .HasOne(b => b.Barn)
+                .WithMany(c => c.Cleanings)
+                .HasForeignKey(bb => bb.BarnId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Cleaning>()
+               .HasOne(a => a.AppUser)
+               .WithMany(c => c.Cleanings)
+               .HasForeignKey(aa => aa.AppUserId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

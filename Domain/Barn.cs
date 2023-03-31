@@ -18,5 +18,6 @@ namespace Domain
         public Guid EggGradeId { get; set; }
         public EggGrade? EggGrade { get; set; }
         public ICollection<Feeder> Feeders { get; set; } = new List<Feeder>();
+        public ICollection<Cleaning> Cleanings { get; set; } = new List<Cleaning>();
     }
 }
