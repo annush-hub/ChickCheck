@@ -23,7 +23,6 @@ namespace API.Controllers
             return await Mediator.Send(new BarnList.Query());
         }
 
-        //[Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<BarnDto>> GetBarn(Guid id)
         {
