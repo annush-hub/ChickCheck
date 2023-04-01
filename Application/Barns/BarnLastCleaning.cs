@@ -1,4 +1,5 @@
 ﻿using Application.Barns.Dtos;
+using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -41,18 +42,13 @@ namespace Application.Barns
                 {
                     Id = cleaning.Id,
                     User = user.Select(x => x.UserName).FirstOrDefault(),
-                    CleanedAt = unixToDt(cleaning.CleanedAt)
+                    CleanedAt = TimeAdapter.unixToDt(cleaning.CleanedAt)
                 };                
 
                 return barnlatestCleaning;
             }
 
-            private static DateTime unixToDt(int unixTimestamp)
-            {
-                DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                dt = dt.AddSeconds(unixTimestamp).ToLocalTime();
-                return dt;
-            }
+            
         }
     }
 }
