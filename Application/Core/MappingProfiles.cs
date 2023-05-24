@@ -14,6 +14,8 @@ namespace Application.Core
         {
             CreateMap<Barn, Barn>();
 
+            CreateMap<Barn, CreateBarnDto>();
+
             CreateMap<Barn, BarnDto>()
                 .ForMember(d => d.EggGradeEU, o => o.MapFrom(src => src.EggGrade.GradeEU))
                 .ForMember(d => d.EggGradeUA, o => o.MapFrom(src => src.EggGrade.GradeUA))
