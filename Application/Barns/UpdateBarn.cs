@@ -4,6 +4,7 @@ using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Persistence;
 using System;
 
@@ -11,7 +12,7 @@ namespace Application.Barns
 {
     public class UpdateBarn
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public CreateBarnDto Barn { get; set; }
         }
@@ -24,7 +25,7 @@ namespace Application.Barns
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly AppDbContext _context;
             private readonly IMapper _mapper;
@@ -37,9 +38,10 @@ namespace Application.Barns
             }
 
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var barn = await _context.Barns.FindAsync(request.Barn.Id);
+                if (barn == null) return null;
 
                 barn.Name = request.Barn.Name;
                 barn.Description = request.Barn.Description;
@@ -53,9 +55,10 @@ namespace Application.Barns
                 barn.IsDeactivated = request.Barn.IsDeactivated;
                 barn.EggGradeId = request.Barn.EggGradeId;
 
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync() > 0;
+                if (!result) return Result<Unit>.Failure("Failed to update Barn");
 
-                return Unit.Value;
+                return Result<Unit>.Success(Unit.Value);
             }
         }
     }

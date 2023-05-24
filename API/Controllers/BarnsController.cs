@@ -49,7 +49,7 @@ namespace API.Controllers
         public async Task<IActionResult> UpdateBarn(Guid id, [FromBody] CreateBarnDto barn)
         {
             barn.Id = id;
-            return Ok(await Mediator.Send(new UpdateBarn.Command { Barn = barn }));
+            return HandleResult(await Mediator.Send(new UpdateBarn.Command { Barn = barn }));
         }
 
         [HttpDelete("{id}")]
