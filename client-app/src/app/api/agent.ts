@@ -4,6 +4,7 @@ import { EggGrade } from "../models/eggGrade";
 import { toast } from "react-toastify";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
+import { EggStorage } from "../models/storage";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -75,9 +76,14 @@ const EggGrades = {
   list: () => requests.get<EggGrade[]>("/eggGrades"),
 };
 
+const Storages = {
+  list: () => requests.get<EggStorage[]>("/storages"),
+};
+
 const agent = {
   Barns,
   EggGrades,
+  Storages,
 };
 
 export default agent;
