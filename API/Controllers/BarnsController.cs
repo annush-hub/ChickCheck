@@ -18,15 +18,17 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<List<BarnDto>>> GetBarns() 
+        public async Task<IActionResult> GetBarns() 
         {
-            return await Mediator.Send(new BarnList.Query());
+            var result = await Mediator.Send(new BarnList.Query());
+            return HandleResult(result);
         }
 
         [HttpGet("short")]
         public async Task<ActionResult<List<CreateBarnDto>>> GetBarnsShort()
         {
-            return await Mediator.Send(new BarnListShort.Query());
+            var result = await Mediator.Send(new BarnListShort.Query());
+            return HandleResult(result);
         }
 
         [HttpGet("{id}")]

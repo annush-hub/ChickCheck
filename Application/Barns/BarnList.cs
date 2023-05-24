@@ -1,17 +1,20 @@
 ﻿using Application.Barns.Dtos;
+using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using System.Collections.Generic;
 
 namespace Application.Barns
 {
     public class BarnList
     {
-        public class Query : IRequest<List<BarnDto>> { }
+        public class Query : IRequest<Result<List<BarnDto>>> { }
 
-        public class Handler : IRequestHandler<Query, List<BarnDto>>
+        public class Handler : IRequestHandler<Query, Result<List<BarnDto>>>
         {
             private readonly AppDbContext _context;
             private readonly IMapper _mapper;
@@ -22,13 +25,13 @@ namespace Application.Barns
                 _mapper = mapper;
             }
 
-            public async Task<List<BarnDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<BarnDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var barns = await _context.Barns
                     .ProjectTo<BarnDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken: cancellationToken);
 
-                return barns;
+                return Result<List<BarnDto>>.Success(barns);
             }
         }
     }

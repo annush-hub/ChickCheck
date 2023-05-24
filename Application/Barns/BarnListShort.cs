@@ -1,4 +1,5 @@
 ﻿using Application.Barns.Dtos;
+using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -14,9 +15,9 @@ namespace Application.Barns
 {
     public class BarnListShort
     {
-        public class Query : IRequest<List<CreateBarnDto>> { }
+        public class Query : IRequest<Result<List<CreateBarnDto>>> { }
 
-        public class Handler : IRequestHandler<Query, List<CreateBarnDto>>
+        public class Handler : IRequestHandler<Query, Result<List<CreateBarnDto>>>
         {
             private readonly AppDbContext _context;
             private readonly IMapper _mapper;
@@ -27,13 +28,12 @@ namespace Application.Barns
                 _mapper = mapper;
             }
 
-            public async Task<List<CreateBarnDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<CreateBarnDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var barns = await _context.Barns
                     .ProjectTo<CreateBarnDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken: cancellationToken);
-
-                return barns;
+                return Result<List<CreateBarnDto>>.Success(barns);
             }
         }
     }
