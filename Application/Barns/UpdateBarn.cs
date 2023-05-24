@@ -41,7 +41,7 @@ namespace Application.Barns
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var barn = await _context.Barns.FindAsync(request.Barn.Id);
-                if (barn == null) return null;
+                //if (barn == null) return null;
 
                 barn.Name = request.Barn.Name;
                 barn.Description = request.Barn.Description;
