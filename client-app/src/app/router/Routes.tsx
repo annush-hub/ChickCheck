@@ -7,6 +7,7 @@ import BarnDetails from "../../features/barns/details/BarnDetails";
 import TestErrors from "../../features/errors/TestError";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
+import StorageDashboard from "../../features/storages/dashboard/StorageDashboard";
 
 export const routes: RouteObject[] = [
   {
@@ -14,6 +15,7 @@ export const routes: RouteObject[] = [
     element: <App />,
     children: [
       { path: "barns", element: <BarnDashboard /> },
+      { path: "storages", element: <StorageDashboard /> },
       { path: "barns/:id", element: <BarnDetails /> },
       { path: "createBarn", element: <BarnForm key="create" /> },
       { path: "edit/:id", element: <BarnForm key="edit" /> },

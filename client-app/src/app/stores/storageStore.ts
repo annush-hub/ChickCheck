@@ -1,6 +1,5 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable } from "mobx";
 import agent from "../api/agent";
-import { v4 as uuid } from "uuid";
 import { EggStorage } from "../models/storage";
 
 export default class StorageStore {
@@ -13,9 +12,7 @@ export default class StorageStore {
   }
 
   get storageList() {
-    return Array.from(this.storageRegistry.values()).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    return Array.from(this.storageRegistry.values());
   }
 
   private setStorage = (storage: EggStorage) => {
@@ -26,6 +23,7 @@ export default class StorageStore {
     this.setLoadingInitial(true);
     try {
       const storages = await agent.Storages.list();
+      console.log(storages);
       storages.forEach((storage) => {
         this.setStorage(storage);
       });

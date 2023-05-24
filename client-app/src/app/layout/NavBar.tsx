@@ -14,6 +14,7 @@ export default function NavBar() {
           Chick Check
         </Menu.Item>
         <Menu.Item as={NavLink} to="/barns" name="Barns" />
+        <Menu.Item as={NavLink} to="/storages" name="Storages" />
         <Menu.Item as={NavLink} to="/errors" name="Errors" />
         <Menu.Item>
           <Button
