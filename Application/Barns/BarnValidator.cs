@@ -15,7 +15,6 @@ namespace Application.Barns
         {
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Description).NotEmpty();
-            RuleFor(x => x.IsDeactivated).NotEmpty();
             RuleFor(x => x.EggGradeId).NotEmpty();
         }
     }

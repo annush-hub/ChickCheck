@@ -15,7 +15,7 @@ namespace Application.Barns
 {
     public class CreateBarn
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public CreateBarnDto Barn { get; set; }
         }
@@ -28,7 +28,7 @@ namespace Application.Barns
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly AppDbContext _context;
 
@@ -37,7 +37,7 @@ namespace Application.Barns
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                     var barn = new Barn
                     {
@@ -58,9 +58,11 @@ namespace Application.Barns
 
                 _context.Barns.Add(barn);
 
-                await _context.SaveChangesAsync();
+                var result = await _context.SaveChangesAsync() > 0;
 
-                return Unit.Value;
+                if (!result) return Result<Unit>.Failure("Failed to create Barn");
+
+                return Result<Unit>.Success(Unit.Value);
             }            
         }
 
