@@ -3,6 +3,7 @@ import { Barn } from "../models/barn";
 import { EggGrade } from "../models/eggGrade";
 import { toast } from "react-toastify";
 import { router } from "../router/Routes";
+import { store } from "../stores/store";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -18,9 +19,12 @@ axios.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    const { data, status } = error.response as AxiosResponse;
+    const { data, status, config } = error.response as AxiosResponse;
     switch (status) {
       case 400:
+        if (config.method === "get" && data.errors.hasOwnProperty("id")) {
+          router.navigate("/not-found");
+        }
         if (data.errors) {
           const modalStateErrors = [];
           for (const key in data.errors) {
@@ -43,7 +47,8 @@ axios.interceptors.response.use(
         router.navigate("/not-found");
         break;
       case 500:
-        toast.error("server error");
+        store.commonStore.setServerError(data);
+        router.navigate("/server-error");
         break;
     }
     return Promise.reject(error);
