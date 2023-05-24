@@ -4,6 +4,7 @@ import App from "../layout/App";
 import BarnDashboard from "../../features/barns/dashboard/BarnDashboard";
 import BarnForm from "../../features/barns/form/BarnForm";
 import BarnDetails from "../../features/barns/details/BarnDetails";
+import TestErrors from "../../features/errors/TestError";
 
 export const routes: RouteObject[] = [
   {
@@ -14,6 +15,7 @@ export const routes: RouteObject[] = [
       { path: "barns/:id", element: <BarnDetails /> },
       { path: "createBarn", element: <BarnForm key="create" /> },
       { path: "edit/:id", element: <BarnForm key="edit" /> },
+      { path: "errors", element: <TestErrors /> },
     ],
   },
 ];
