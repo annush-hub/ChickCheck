@@ -2,6 +2,7 @@
 using Application.Core;
 using AutoMapper;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 using System;
@@ -13,6 +14,14 @@ namespace Application.Barns
         public class Command : IRequest
         {
             public CreateBarnDto Barn { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Barn).SetValidator(new BarnValidator());
+            }
         }
 
         public class Handler : IRequestHandler<Command>

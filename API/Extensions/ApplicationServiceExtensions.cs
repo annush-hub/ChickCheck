@@ -1,5 +1,7 @@
 ﻿using Application.Barns;
 using Application.Core;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -32,6 +34,8 @@ namespace API.Extensions
 
             services.AddMediatR(typeof(BarnList.Handler));
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<CreateBarn>();
 
             return services;
         }
