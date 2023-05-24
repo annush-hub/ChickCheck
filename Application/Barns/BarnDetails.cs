@@ -1,4 +1,5 @@
 ﻿using Application.Barns.Dtos;
+using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;
@@ -15,12 +16,12 @@ namespace Application.Barns
 {
     public class BarnDetails
     {
-        public class Query : IRequest<BarnDto>
+        public class Query : IRequest<Result<BarnDto>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, BarnDto>
+        public class Handler : IRequestHandler<Query,Result<BarnDto>>
         {
             private readonly AppDbContext _context;
             private readonly IMapper _mapper;
@@ -31,12 +32,14 @@ namespace Application.Barns
                 _mapper = mapper;
             }
 
-            async Task<BarnDto> IRequestHandler<Query, BarnDto>.Handle(Query request, CancellationToken cancellationToken)
+
+            public async Task<Result<BarnDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var barn = await _context.Barns
                     .ProjectTo<BarnDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync<BarnDto>(x => x.Id == request.Id);
-                return barn;
+
+                return Result<BarnDto>.Success(barn);
             }
         }
     }

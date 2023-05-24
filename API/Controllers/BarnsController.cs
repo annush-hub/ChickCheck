@@ -30,9 +30,11 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BarnDto>> GetBarn(Guid id)
+        public async Task<IActionResult> GetBarn(Guid id)
         {
-            return await Mediator.Send(new BarnDetails.Query { Id = id});
+            var result = await Mediator.Send(new BarnDetails.Query { Id = id});
+
+            return HandleResult(result);
         }
 
         [HttpPost]
