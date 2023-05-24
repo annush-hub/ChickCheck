@@ -1,10 +1,11 @@
 import React from "react";
-import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { Navigate, RouteObject, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import BarnDashboard from "../../features/barns/dashboard/BarnDashboard";
 import BarnForm from "../../features/barns/form/BarnForm";
 import BarnDetails from "../../features/barns/details/BarnDetails";
 import TestErrors from "../../features/errors/TestError";
+import NotFound from "../../features/errors/NotFound";
 
 export const routes: RouteObject[] = [
   {
@@ -16,6 +17,8 @@ export const routes: RouteObject[] = [
       { path: "createBarn", element: <BarnForm key="create" /> },
       { path: "edit/:id", element: <BarnForm key="edit" /> },
       { path: "errors", element: <TestErrors /> },
+      { path: "not-found", element: <NotFound /> },
+      { path: "*", element: <Navigate replace to="/not-found" /> },
     ],
   },
 ];
