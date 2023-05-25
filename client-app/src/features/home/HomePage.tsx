@@ -15,11 +15,11 @@ export default function HomePage() {
         </Header>
         <Header as="h2" content={t("homePage.welcome")} inverted />
         <Button as={Link} to="/barns" size="huge" inverted>
-          Go to Barns
+          {t("homePage.goToBarns")}
         </Button>
-      </Container>
-      <Container>
-        <LanguageSelector />
+        <div style={{ marginTop: 25 }}>
+          <LanguageSelector />
+        </div>
       </Container>
     </Segment>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Button } from "semantic-ui-react";
 
 function LanguageSelector() {
   const { i18n } = useTranslation();
@@ -9,10 +10,10 @@ function LanguageSelector() {
   };
 
   return (
-    <div>
-      <button onClick={() => changeLanguage("en")}>English</button>
-      <button onClick={() => changeLanguage("ua")}>Українська</button>
-    </div>
+    <Button.Group>
+      <Button onClick={() => changeLanguage("en")}>English</Button>
+      <Button onClick={() => changeLanguage("ua")}>Українська</Button>
+    </Button.Group>
   );
 }
 
