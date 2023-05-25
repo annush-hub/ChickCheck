@@ -12,6 +12,10 @@
   "barnList": {
     "itemView": "Деталі"
   },
+  "storageList": {
+    "working": "Активний",
+    "notWorking": "Неактивний"
+  },
   "unionsOfMeasurement": {
     "temperature": "°C"
   },

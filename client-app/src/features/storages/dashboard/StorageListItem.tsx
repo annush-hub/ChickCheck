@@ -3,6 +3,7 @@ import { Item, Label, Segment } from "semantic-ui-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEgg, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { EggStorage } from "../../../app/models/storage";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   storage: EggStorage;
@@ -12,12 +13,15 @@ export default function StorageListItem({ storage }: Props) {
   const getStatusColor = () => {
     return storage.isWorking ? "green" : "red";
   };
+  const { t } = useTranslation();
 
   return (
     <Segment.Group>
       <Segment>
         <Label color={getStatusColor()}>
-          {storage.isWorking ? "Active" : "Inactive"}
+          {storage.isWorking
+            ? t("storageList.working")
+            : t("storageList.notWorking")}
         </Label>
 
         <Item.Group>

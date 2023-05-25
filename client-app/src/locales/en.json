@@ -12,6 +12,10 @@
   "barnList": {
     "itemView": "Details"
   },
+  "storageList": {
+    "working": "Active",
+    "notWorking": "Inactive"
+  },
   "unionsOfMeasurement": {
     "temperature": "°F"
   },
