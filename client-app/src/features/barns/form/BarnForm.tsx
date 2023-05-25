@@ -29,6 +29,7 @@ export default observer(function BarnForm() {
     temperatureInFahrenheit: 0,
     isDeactivated: false,
     eggGradeId: "",
+    feeders: [],
   });
 
   useEffect(() => {

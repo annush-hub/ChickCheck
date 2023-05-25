@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import BarnDetailedInfo from "./BarnDetailedInfo";
 import BarnDetailedHeader from "./BarnDetailedHeader";
+import BarnFeeders from "./BarnFeeders";
 
 export default observer(function BarnDetails() {
   const { barnStore, eggGradeStore } = useStore();
@@ -22,6 +23,7 @@ export default observer(function BarnDetails() {
     <>
       <BarnDetailedHeader barn={barn} />
       <BarnDetailedInfo barn={barn} eggGrades={eggGrades} />
+      <BarnFeeders barn={barn} />
     </>
   );
 });

@@ -15,9 +15,9 @@ namespace Application.Barns
 {
     public class BarnListShort
     {
-        public class Query : IRequest<Result<List<CreateBarnDto>>> { }
+        public class Query : IRequest<Result<List<BarnFeedersDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<CreateBarnDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<BarnFeedersDto>>>
         {
             private readonly AppDbContext _context;
             private readonly IMapper _mapper;
@@ -28,12 +28,12 @@ namespace Application.Barns
                 _mapper = mapper;
             }
 
-            public async Task<Result<List<CreateBarnDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<BarnFeedersDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var barns = await _context.Barns
-                    .ProjectTo<CreateBarnDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<BarnFeedersDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken: cancellationToken);
-                return Result<List<CreateBarnDto>>.Success(barns);
+                return Result<List<BarnFeedersDto>>.Success(barns);
             }
         }
     }

@@ -1,3 +1,5 @@
+import { Feeder } from "./feeder";
+
 export interface Barn {
   id: string;
   name: string;
@@ -6,4 +8,5 @@ export interface Barn {
   temperatureInFahrenheit: number;
   isDeactivated: boolean;
   eggGradeId: string;
+  feeders: Feeder[];
 }
