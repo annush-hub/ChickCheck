@@ -10,18 +10,31 @@
     "filtersNotActive": "Not active"
   },
   "barnList": {
-    "itemView": "Details"
+    "itemView": "Details",
+    "editButton:": "Edit"
   },
   "storageList": {
     "working": "Active",
     "notWorking": "Inactive"
   },
   "unionsOfMeasurement": {
-    "temperature": "°F"
+    "temperature": "°F",
+    "capacity": "l."
   },
   "navBar": {
     "barns": "Barns",
     "storages": "Storages",
     "createBarn": "Create Barn"
+  },
+  "barnFeeders": {
+    "feederId": "Feeder ID",
+    "capacity": "Capacity",
+    "fullness": "Fullness",
+    "alEmpty": "Almost Empty",
+    "empty": "Empty"
+  },
+  "barn": {
+    "editItem": "Edit",
+    "cancel": "Cancel"
   }
 }

@@ -10,18 +10,31 @@
     "filtersNotActive": "Неактивні"
   },
   "barnList": {
-    "itemView": "Деталі"
+    "itemView": "Деталі",
+    "editButton:": "Редагувати"
   },
   "storageList": {
     "working": "Активний",
     "notWorking": "Неактивний"
   },
   "unionsOfMeasurement": {
-    "temperature": "°C"
+    "temperature": "°C",
+    "capacity": "л."
   },
   "navBar": {
     "barns": "Амбари",
     "storages": "Склади",
     "createBarn": "Створити амбар"
+  },
+  "barnFeeders": {
+    "feederId": "ID годівниці",
+    "capacity": "Ємність",
+    "fullness": "Наповненість",
+    "alEmpty": "Майже пуста",
+    "empty": "Пуста"
+  },
+  "barn": {
+    "editItem": "Редагувати",
+    "cancel": "Скасувати"
   }
 }

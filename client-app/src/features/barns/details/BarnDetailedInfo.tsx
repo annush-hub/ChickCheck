@@ -8,6 +8,7 @@ import {
   faTemperatureThreeQuarters,
 } from "@fortawesome/free-solid-svg-icons";
 import { EggGrade } from "../../../app/models/eggGrade";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   barn: Barn;
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export default observer(function BarnDetailedInfo({ barn, eggGrades }: Props) {
+  const { t } = useTranslation();
   return (
     <Segment.Group>
       <Segment attached="top">
@@ -53,7 +55,9 @@ export default observer(function BarnDetailedInfo({ barn, eggGrades }: Props) {
             />
           </Grid.Column>
           <Grid.Column width={11}>
-            <span>{barn.temperatureInCelsius} °C</span>
+            <span>
+              {barn.temperatureInCelsius} {t("unionsOfMeasurement.temperature")}
+            </span>
           </Grid.Column>
         </Grid>
       </Segment>
