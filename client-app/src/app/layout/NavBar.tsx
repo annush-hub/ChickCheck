@@ -2,8 +2,6 @@ import { Button, Container, Menu } from "semantic-ui-react";
 import { NavLink } from "react-router-dom";
 import i18n from "../../i18n";
 import { changeLanguage } from "i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFlag } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
 export default function NavBar() {
@@ -37,16 +35,14 @@ export default function NavBar() {
               active={i18n.language === "en"}
               onClick={() => changeLanguage("en")}
             >
-              EN
-              {/* <i className="flag flag-us"></i> */}
+              <i className="flag-icon flag-icon-gb"></i>
             </Button>
             <Button.Or />
             <Button
               active={i18n.language === "ua"}
               onClick={() => changeLanguage("ua")}
             >
-              UA
-              {/* <i className="flag flag-ukraine"></i> */}
+              <i className="flag-icon flag-icon-ua"></i>
             </Button>
           </Button.Group>
         </Menu.Item>

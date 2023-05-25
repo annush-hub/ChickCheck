@@ -19,6 +19,7 @@
     "mobx-react-lite": "^3.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-flag-icon-css": "^1.0.25",
     "react-i18next": "^12.3.1",
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
@@ -55,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-flag-icon-css": "^1.0.5",
     "@types/uuid": "^9.0.1"
   }
 }
