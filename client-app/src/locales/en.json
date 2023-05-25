@@ -27,11 +27,13 @@
     "createBarn": "Create Barn"
   },
   "barnFeeders": {
+    "title": "Barn Feeders",
     "feederId": "Feeder ID",
     "capacity": "Capacity",
     "fullness": "Fullness",
     "alEmpty": "Almost Empty",
-    "empty": "Empty"
+    "empty": "Empty",
+    "addFeeder": "Add Feeder"
   },
   "barn": {
     "editItem": "Edit",

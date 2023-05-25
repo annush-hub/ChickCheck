@@ -27,11 +27,13 @@
     "createBarn": "Створити амбар"
   },
   "barnFeeders": {
+    "title": "Годівниці амбару",
     "feederId": "ID годівниці",
     "capacity": "Ємність",
     "fullness": "Наповненість",
     "alEmpty": "Майже пуста",
-    "empty": "Пуста"
+    "empty": "Пуста",
+    "addFeeder": "Додати годівницю"
   },
   "barn": {
     "editItem": "Редагувати",

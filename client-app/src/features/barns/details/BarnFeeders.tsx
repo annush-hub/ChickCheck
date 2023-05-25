@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import FeedersTable from "./FeedersTable";
 import { Barn } from "../../../app/models/barn";
-import { Label, Table } from "semantic-ui-react";
-import { Feeder } from "../../../app/models/feeder";
+import { Button, Grid, GridColumn } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import FeederForm from "../../feeders/FeederForm";
 
 interface Props {
   barn: Barn;
@@ -10,43 +11,36 @@ interface Props {
 
 export default function BarnFeeders({ barn }: Props) {
   const { t } = useTranslation();
+  const [isShown, setIsShown] = useState(false);
+
+  const toggleFormVisibility = () => {
+    setIsShown((current) => !current);
+  };
   return (
-    <div>
-      <h3>Barn Feeders:</h3>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>{t("barnFeeders.feederId")}</Table.HeaderCell>
-            <Table.HeaderCell>{t("barnFeeders.capacity")}</Table.HeaderCell>
-            <Table.HeaderCell>{t("barnFeeders.fullness")}</Table.HeaderCell>
-            <Table.HeaderCell></Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {barn.feeders.map((feeder: Feeder) => (
-            <Table.Row key={feeder.id}>
-              <Table.Cell>{feeder.id}</Table.Cell>
-              <Table.Cell>
-                {feeder.capacity} {t("unionsOfMeasurement.capacity")}
-              </Table.Cell>
-              <Table.Cell>{feeder.fullness} %</Table.Cell>
-              {/* <Table.Cell>{feeder.isInUse ? "Yes" : "No"}</Table.Cell> */}
-              <Table.Cell>
-                {feeder.fullness <= 0 && (
-                  <Label as="a" color="red" ribbon="right">
-                    {t("barnFeeders.empty")}
-                  </Label>
-                )}
-                {feeder.fullness > 0 && feeder.fullness <= 10 && (
-                  <Label as="a" color="orange" ribbon="right">
-                    {t("barnFeeders.alEmpty")}
-                  </Label>
-                )}
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
-    </div>
+    <>
+      <h3>{t("barnFeeders.title")}</h3>
+
+      <Grid>
+        <Grid.Row>
+          <Button
+            onClick={toggleFormVisibility}
+            floated="right"
+            positive
+            style={{ margin: 5 }}
+          >
+            {t("barnFeeders.addFeeder")}
+          </Button>
+        </Grid.Row>
+
+        <Grid.Column width={10}>
+          {" "}
+          <FeedersTable barn={barn} />
+        </Grid.Column>
+        <Grid.Column width={6}>
+          {" "}
+          {isShown && <FeederForm onCancel={toggleFormVisibility} />}
+        </Grid.Column>
+      </Grid>
+    </>
   );
 }
