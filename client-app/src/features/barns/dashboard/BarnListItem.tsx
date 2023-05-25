@@ -8,6 +8,7 @@ import {
   faEgg,
   faTemperatureThreeQuarters,
 } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   barn: Barn;
@@ -16,6 +17,7 @@ interface Props {
 export default function BarnListItem({ barn }: Props) {
   const { eggGradeStore } = useStore();
   const { eggGradeList: eggGrades } = eggGradeStore;
+  const { t } = useTranslation();
   return (
     <Segment.Group>
       <Segment>
@@ -38,7 +40,7 @@ export default function BarnListItem({ barn }: Props) {
           {eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeUA}
           <span> </span>
           <FontAwesomeIcon icon={faTemperatureThreeQuarters} />{" "}
-          {barn.temperatureInCelsius} °C
+          {barn.temperatureInCelsius} {t("unionsOfMeasurement.temperature")}
         </span>
       </Segment>
       <Segment clearing>
@@ -46,7 +48,7 @@ export default function BarnListItem({ barn }: Props) {
           as={Link}
           to={`/barns/${barn.id}`}
           floated="right"
-          content="View"
+          content={t("barnList.itemView")}
           color="orange"
         />
       </Segment>

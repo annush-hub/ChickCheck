@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
+import { Grid, GridColumn, Header } from "semantic-ui-react";
 import BarnList from "./BarnList";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import BarnFilters from "./BarnFilters";
+import { useTranslation } from "react-i18next";
 
 export default observer(function BarnDashboard() {
   const { barnStore, eggGradeStore } = useStore();
   const { loadBarns, barnRegistry } = barnStore;
-
   useEffect(() => {
     if (barnRegistry.size <= 1) loadBarns();
   }, [loadBarns, barnRegistry]);
