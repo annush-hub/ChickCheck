@@ -1,0 +1,23 @@
+{
+  "homePage": {
+    "welcome": "Welcome",
+    "goToBarns": "Go to Barns"
+  },
+  "barnFilters": {
+    "filtersTitle": "Filters",
+    "filtersAll": "All barns",
+    "filtersActive": "Active",
+    "filtersNotActive": "Not active"
+  },
+  "barnList": {
+    "itemView": "Details"
+  },
+  "unionsOfMeasurement": {
+    "temperature": "°F"
+  },
+  "navBar": {
+    "barns": "Barns",
+    "storages": "Storages",
+    "createBarn": "Create Barn"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "homePage": {
+    "welcome": "Ласкаво просимо",
+    "goToBarns": "Перейти до Амбарів"
+  },
+  "barnFilters": {
+    "filtersTitle": "Фільтри",
+    "filtersAll": "Всі амбари",
+    "filtersActive": "Активні",
+    "filtersNotActive": "Неактивні"
+  },
+  "barnList": {
+    "itemView": "Деталі"
+  },
+  "unionsOfMeasurement": {
+    "temperature": "°C"
+  },
+  "navBar": {
+    "barns": "Амбари",
+    "storages": "Склади",
+    "createBarn": "Створити амбар"
+  }
+}
