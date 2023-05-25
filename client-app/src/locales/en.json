@@ -36,5 +36,15 @@
   "barn": {
     "editItem": "Edit",
     "cancel": "Cancel"
+  },
+  "barnForm": {
+    "name": "Name",
+    "description": "Description",
+    "eggGrade": "Egg Grade",
+    "selectEggGrade": "Select egg grade",
+    "temperature": "Temperature",
+    "isDeactivated": "Is deactivated",
+    "cancel": "Cancel",
+    "submit": "Submit"
   }
 }

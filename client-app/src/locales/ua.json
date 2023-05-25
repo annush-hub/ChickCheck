@@ -36,5 +36,15 @@
   "barn": {
     "editItem": "Редагувати",
     "cancel": "Скасувати"
+  },
+  "barnForm": {
+    "name": "Назва",
+    "description": "Опис",
+    "eggGrade": "Категорія яєць",
+    "selectEggGrade": "Оберіть категорію яєць",
+    "temperature": "Температура",
+    "isDeactivated": "Неактивний",
+    "cancel": "Скасувати",
+    "submit": "Підтвердити"
   }
 }

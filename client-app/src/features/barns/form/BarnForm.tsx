@@ -12,6 +12,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Barn } from "../../../app/models/barn";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { v4 as uuid } from "uuid";
+import { useTranslation } from "react-i18next";
 
 export default observer(function BarnForm() {
   const { barnStore, eggGradeStore } = useStore();
@@ -19,6 +20,7 @@ export default observer(function BarnForm() {
     barnStore;
 
   const { id } = useParams();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [barn, setBarn] = useState<Barn>({
@@ -37,7 +39,7 @@ export default observer(function BarnForm() {
       loadBarn(id).then((barn) => {
         if (barn) {
           setBarn(barn);
-          setSelectedEggGrade(barn.eggGradeId); // Set the initial selected egg grade
+          setSelectedEggGrade(barn.eggGradeId);
         }
       });
     }
@@ -45,7 +47,6 @@ export default observer(function BarnForm() {
 
   const { eggGradeList: eggGrades } = eggGradeStore;
 
-  //const [selectedEggGrade, setSelectedEggGrade] = useState(barn.eggGradeId);
   const [selectedEggGrade, setSelectedEggGrade] = useState<string>(
     barn.eggGradeId
   );
@@ -109,18 +110,19 @@ export default observer(function BarnForm() {
     <Segment clearing>
       <Form onSubmit={handleSubmit} autoComplete="off">
         <Form.Input
-          placeholder="Name"
+          placeholder={t("barnForm.name")}
           value={barn.name}
           name="name"
           onChange={handleInputChange}
         />
         <Form.TextArea
-          placeholder="Description"
+          placeholder={t("barnForm.description")}
           name="description"
           value={barn.description}
           onChange={handleInputChange}
         />
         <Form.Input
+          label={t("barnForm.temperature")}
           type="number"
           placeholder="Temperature in Celcius"
           name="temperatureInCelsius"
@@ -128,9 +130,9 @@ export default observer(function BarnForm() {
           onChange={handleInputChange}
         />
         <Form.Select
-          label="Egg Grade"
+          label={t("barnForm.eggGrade")}
           name="eggGradeId"
-          placeholder="Select egg grade"
+          placeholder={t("barnForm.selectEggGrade")!}
           options={eggGrades.map((eggGrade) => ({
             key: eggGrade.id,
             value: eggGrade.id,
@@ -141,7 +143,7 @@ export default observer(function BarnForm() {
         />
 
         <Form.Checkbox
-          label="Is Deactivated"
+          label={t("barnForm.isDeactivated")}
           name="isDeactivated"
           checked={barn.isDeactivated}
           onChange={handleCheckboxChange}
@@ -151,7 +153,7 @@ export default observer(function BarnForm() {
           floated="right"
           positive
           type="submit"
-          content="Submit"
+          content={t("barnForm.submit")}
           loading={loading}
         />
         <Button
@@ -159,7 +161,7 @@ export default observer(function BarnForm() {
           to="/barns"
           floated="right"
           type="button"
-          content="Cancel"
+          content={t("barnForm.cancel")}
         />
       </Form>
     </Segment>
