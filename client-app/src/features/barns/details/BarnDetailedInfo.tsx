@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { EggGrade } from "../../../app/models/eggGrade";
 import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n";
 
 interface Props {
   barn: Barn;
@@ -17,6 +18,13 @@ interface Props {
 
 export default observer(function BarnDetailedInfo({ barn, eggGrades }: Props) {
   const { t } = useTranslation();
+
+  const displayTemperature =
+    i18n.language === "en"
+      ? barn!.temperatureInFahrenheit
+      : barn!.temperatureInCelsius;
+
+  const temperatureUnit = i18n.language === "en" ? "°F" : "°C";
   return (
     <Segment.Group>
       <Segment attached="top">
@@ -56,7 +64,7 @@ export default observer(function BarnDetailedInfo({ barn, eggGrades }: Props) {
           </Grid.Column>
           <Grid.Column width={11}>
             <span>
-              {barn.temperatureInCelsius} {t("unionsOfMeasurement.temperature")}
+              {displayTemperature} {temperatureUnit}
             </span>
           </Grid.Column>
         </Grid>
