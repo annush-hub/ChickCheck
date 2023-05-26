@@ -17,7 +17,14 @@ export default observer(function BarnForm() {
     barnStore;
 
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const temperatureLabel =
+    i18n.language === "ua"
+      ? t("unionsOfMeasurement.temperatureInCelsius")
+      : t("unionsOfMeasurement.temperatureInFahrenheit");
+  const temperatureFieldName =
+    i18n.language === "ua" ? "temperatureInCelsius" : "temperatureInFahrenheit";
   const navigate = useNavigate();
 
   const [barn, setBarn] = useState<Barn>({
@@ -68,7 +75,6 @@ export default observer(function BarnForm() {
 
   return (
     <Segment clearing>
-      <Header content="Barn Details" sub color="teal" />
       <Formik
         validationSchema={validationSchema}
         enableReinitialize
@@ -91,15 +97,19 @@ export default observer(function BarnForm() {
               name="description"
             />
             <FormField>
-              <label htmlFor="eggGradeId">{t("barnForm.eggGrade")}</label>
+              <label htmlFor="temperature">
+                {i18n.language === "ua"
+                  ? t("unionsOfMeasurement.temperatureInCelsius")
+                  : t("unionsOfMeasurement.temperatureInFahrenheit")}
+              </label>
               <Field
-                label={t("barnForm.temperature")}
+                llabel={temperatureLabel}
                 type="number"
-                placeholder="Temperature in Celcius"
-                name="temperatureInCelsius"
+                placeholder={temperatureLabel}
+                name={temperatureFieldName}
               />
               <ErrorMessage
-                name="temperatureInCelsius"
+                name={temperatureFieldName}
                 render={(error) => <Label basic color="red" content={error} />}
               />
             </FormField>
@@ -128,7 +138,7 @@ export default observer(function BarnForm() {
               />
             </FormField>
 
-            <label>{t("barnForm.isDeactivated")}</label>
+            <label style={{ margin: 5 }}>{t("barnForm.isDeactivated")}</label>
             <Field
               type="checkbox"
               name="isDeactivated"

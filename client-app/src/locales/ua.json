@@ -21,7 +21,8 @@
   },
   "unionsOfMeasurement": {
     "temperature": "°C",
-    "capacity": "л."
+    "capacity": "л.",
+    "temperatureInCelsius": "Температура в Цельсіях"
   },
   "navBar": {
     "barns": "Амбари",

@@ -21,7 +21,8 @@
   },
   "unionsOfMeasurement": {
     "temperature": "°F",
-    "capacity": "l."
+    "capacity": "l.",
+    "temperatureInFahrenheit": "Temperature in Fahrenheit"
   },
   "navBar": {
     "barns": "Barns",
