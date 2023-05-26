@@ -58,7 +58,8 @@ export default observer(function BarnForm() {
   const [selectedEggGrade, setSelectedEggGrade] = useState<string>(
     barn.eggGradeId
   );
-  if (loadingiInitial) return <LoadingComponent content="Loading barn..." />;
+  if (loadingiInitial)
+    return <LoadingComponent content={t("loadingComponent.loadingBarn")} />;
 
   function handleFormSubmit(barn: Barn) {
     if (!barn.id) {

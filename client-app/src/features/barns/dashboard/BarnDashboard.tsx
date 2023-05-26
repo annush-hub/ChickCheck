@@ -5,10 +5,12 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import BarnFilters from "./BarnFilters";
+import { useTranslation } from "react-i18next";
 
 export default observer(function BarnDashboard() {
   const { barnStore, eggGradeStore } = useStore();
   const { loadBarns, barnRegistry } = barnStore;
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (barnRegistry.size <= 1) loadBarns();
@@ -19,7 +21,7 @@ export default observer(function BarnDashboard() {
   }, [eggGradeStore]);
 
   if (barnStore.loadingiInitial || eggGradeStore.loadingiInitial)
-    return <LoadingComponent content="Loading app" />;
+    return <LoadingComponent content={t("loadingComponent.loadingBarns")} />;
 
   return (
     <Grid>

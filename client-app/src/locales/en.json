@@ -68,5 +68,12 @@
     "weakPassword": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
     "invalidLogin": "Invalid email or password",
     "unauthorised": "Unauthorised"
+  },
+  "loadingComponent": {
+    "loading": "Loading...",
+    "loadingApp": "Loading app...",
+    "loadingBarns": "Loading Barns...",
+    "loadingBarn": "Loading Barn...",
+    "loadingStorages": "Loading Storages..."
   }
 }
