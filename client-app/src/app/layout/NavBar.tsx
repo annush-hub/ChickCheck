@@ -3,10 +3,14 @@ import { NavLink } from "react-router-dom";
 import i18n from "../../i18n";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
+import { useStore } from "../stores/store";
+import { observer } from "mobx-react-lite";
 
-export default function NavBar() {
+export default observer(function NavBar() {
   const { t } = useTranslation();
-
+  const {
+    userStore: { user, logout },
+  } = useStore();
   return (
     <Menu inverted fixed="top">
       <Container>
@@ -46,7 +50,10 @@ export default function NavBar() {
             </Button>
           </Button.Group>
         </Menu.Item>
+        <Menu.Item position="right">
+          <Button content="Logout" onClick={logout} icon="power" />
+        </Menu.Item>
       </Container>
     </Menu>
   );
-}
+});
