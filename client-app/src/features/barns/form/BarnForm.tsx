@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Button, FormField, Header, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
@@ -41,7 +41,10 @@ export default observer(function BarnForm() {
   const validationSchema = Yup.object({
     name: Yup.string().required(t("barnFormErrors.name")!),
     description: Yup.string().required(t("barnFormErrors.description")!),
-    temperatureInCelsius: Yup.number().min(1, t("barnFormErrors.temperature")!),
+    [temperatureFieldName]: Yup.number().min(
+      1,
+      t("barnFormErrors.temperature")!
+    ),
     eggGradeId: Yup.string().required(t("barnFormErrors.eggGrade")!),
   });
 
@@ -64,6 +67,13 @@ export default observer(function BarnForm() {
   if (loadingiInitial)
     return <LoadingComponent content={t("loadingComponent.loadingBarn")} />;
 
+  const handleLanguageChange = () => {
+    setBarn((prevBarn) => ({
+      ...prevBarn,
+      temperatureInCelsius: prevBarn.temperatureInCelsius,
+      temperatureInFahrenheit: prevBarn.temperatureInFahrenheit,
+    }));
+  };
   function handleFormSubmit(barn: Barn) {
     if (!barn.id) {
       barn.id = uuid();
@@ -123,12 +133,12 @@ export default observer(function BarnForm() {
                 onChange={handleChange}
               >
                 <option value="">{t("barnForm.selectEggGrade")}</option>
+
                 {eggGrades.map((eggGrade) => (
-                  <option
-                    key={eggGrade.id}
-                    value={eggGrade.id} // Set the 'selected' attribute based on the comparison
-                  >
-                    {eggGrade.gradeUA}
+                  <option key={eggGrade.id} value={eggGrade.id}>
+                    {i18n.language === "en"
+                      ? eggGrade.gradeEU
+                      : eggGrade.gradeUA}
                   </option>
                 ))}
               </Field>
