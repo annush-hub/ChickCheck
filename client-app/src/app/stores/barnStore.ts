@@ -69,27 +69,6 @@ export default class BarnStore {
     }
   };
 
-  loadBarnWithFeeders = async (id: string) => {
-    let barn = this.getBarn(id);
-    if (barn) {
-      this.selectedBarn = barn;
-      return barn;
-    } else {
-      this.setLoadingInitial(true);
-      try {
-        barn = await agent.Barns.details(id);
-        this.setBarn(barn);
-        this.selectedBarn = barn;
-        runInAction(() => (this.selectedBarn = barn));
-        this.setLoadingInitial(false);
-        return barn;
-      } catch (error) {
-        console.log(error);
-        this.setLoadingInitial(false);
-      }
-    }
-  };
-
   private getBarn = (id: string) => {
     return this.barnRegistry.get(id);
   };
