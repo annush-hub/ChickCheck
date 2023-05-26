@@ -24,7 +24,7 @@ export default observer(function NavBar() {
         </Menu.Item>
         <Menu.Item as={NavLink} to="/barns" name={t("navBar.barns")!} />
         <Menu.Item as={NavLink} to="/storages" name={t("navBar.storages")!} />
-        <Menu.Item as={NavLink} to="/errors" name="Errors" />
+
         <Menu.Item>
           <Button
             as={NavLink}
@@ -50,7 +50,7 @@ export default observer(function NavBar() {
             </Button>
           </Button.Group>
         </Menu.Item>
-        <Menu.Item position="right">
+        <Menu.Item>
           <Button content={t("navBar.logout")!} onClick={logout} icon="power" />
         </Menu.Item>
       </Container>
