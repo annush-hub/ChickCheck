@@ -1,18 +1,15 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import {
-  Button,
-  CheckboxProps,
-  DropdownProps,
-  Form,
-  Segment,
-} from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Button, FormField, Header, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Barn } from "../../../app/models/barn";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
-import { v4 as uuid } from "uuid";
 import { useTranslation } from "react-i18next";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import MyTextInput from "../../../app/common/form/MyTextInput";
+import { v4 as uuid } from "uuid";
 
 export default observer(function BarnForm() {
   const { barnStore, eggGradeStore } = useStore();
@@ -34,6 +31,17 @@ export default observer(function BarnForm() {
     feeders: [],
   });
 
+  const validationSchema = Yup.object({
+    name: Yup.string().required("The barn name is required"),
+    description: Yup.string().required("The barn description is required"),
+    temperatureInCelsius: Yup.number()
+      .typeError("Temperature must be a number")
+      .positive("Temperature must be a positive number")
+      .min(1, "Temperature must be greater than zero")
+      .required("Temperature is required"),
+    eggGradeId: Yup.string().required("The barn egg Grade is required"),
+  });
+
   useEffect(() => {
     if (id) {
       loadBarn(id).then((barn) => {
@@ -52,7 +60,7 @@ export default observer(function BarnForm() {
   );
   if (loadingiInitial) return <LoadingComponent content="Loading barn..." />;
 
-  function handleSubmit() {
+  function handleFormSubmit(barn: Barn) {
     if (!barn.id) {
       barn.id = uuid();
       createBarn(barn).then(() => navigate(`/barns/${barn.id}`));
@@ -61,109 +69,94 @@ export default observer(function BarnForm() {
     }
   }
 
-  function handleInputChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value, type } = event.target;
-
-    let inputValue: string | number | boolean = value;
-
-    if (type === "number") {
-      const numericValue = parseFloat(value);
-      if (!isNaN(numericValue) && numericValue >= 17 && numericValue <= 25) {
-        inputValue = numericValue;
-      } else {
-        inputValue = "";
-      }
-    }
-    setBarn((barn) => ({ ...barn, [name]: value }));
-  }
-
-  function handleCheckboxChange(
-    event: FormEvent<HTMLInputElement>,
-    data: CheckboxProps
-  ) {
-    const { name, checked } = data;
-
-    setBarn((barn) => ({ ...barn, [name as string]: checked }));
-  }
-
-  function handleEggGradeChange(
-    event: React.SyntheticEvent<HTMLElement, Event>,
-    data: DropdownProps
-  ) {
-    const { value } = data;
-    setSelectedEggGrade(value as string);
-
-    const selectedEggGrade = eggGrades.find(
-      (eggGrade) => eggGrade.id === value
-    );
-
-    setBarn((prevBarn) => ({
-      ...prevBarn,
-      eggGradeId: value as string,
-      eggGrade: selectedEggGrade?.gradeUA || "",
-    }));
-  }
-
   return (
     <Segment clearing>
-      <Form onSubmit={handleSubmit} autoComplete="off">
-        <Form.Input
-          placeholder={t("barnForm.name")}
-          value={barn.name}
-          name="name"
-          onChange={handleInputChange}
-        />
-        <Form.TextArea
-          placeholder={t("barnForm.description")}
-          name="description"
-          value={barn.description}
-          onChange={handleInputChange}
-        />
-        <Form.Input
-          label={t("barnForm.temperature")}
-          type="number"
-          placeholder="Temperature in Celcius"
-          name="temperatureInCelsius"
-          value={barn.temperatureInCelsius}
-          onChange={handleInputChange}
-        />
-        <Form.Select
-          label={t("barnForm.eggGrade")}
-          name="eggGradeId"
-          placeholder={t("barnForm.selectEggGrade")!}
-          options={eggGrades.map((eggGrade) => ({
-            key: eggGrade.id,
-            value: eggGrade.id,
-            text: eggGrade.gradeUA,
-          }))}
-          value={selectedEggGrade}
-          onChange={handleEggGradeChange}
-        />
+      <Header content="Barn Details" sub color="teal" />
+      <Formik
+        validationSchema={validationSchema}
+        enableReinitialize
+        initialValues={barn}
+        onSubmit={(values) => handleFormSubmit(values)}
+      >
+        {({
+          values: barn,
+          handleChange,
+          handleSubmit,
+          isValid,
+          dirty,
+          isSubmitting,
+        }) => (
+          <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
+            <MyTextInput name="name" placeholder="Name" />
 
-        <Form.Checkbox
-          label={t("barnForm.isDeactivated")}
-          name="isDeactivated"
-          checked={barn.isDeactivated}
-          onChange={handleCheckboxChange}
-        />
+            <MyTextInput
+              placeholder={t("barnForm.description")}
+              name="description"
+            />
+            <FormField>
+              <label htmlFor="eggGradeId">{t("barnForm.eggGrade")}</label>
+              <Field
+                label={t("barnForm.temperature")}
+                type="number"
+                placeholder="Temperature in Celcius"
+                name="temperatureInCelsius"
+              />
+              <ErrorMessage
+                name="temperatureInCelsius"
+                render={(error) => <Label basic color="red" content={error} />}
+              />
+            </FormField>
 
-        <Button
-          floated="right"
-          positive
-          type="submit"
-          content={t("barnForm.submit")}
-          loading={loading}
-        />
-        <Button
-          as={Link}
-          to="/barns"
-          floated="right"
-          type="button"
-          content={t("barnForm.cancel")}
-        />
-      </Form>
+            <FormField>
+              <label htmlFor="eggGradeId">{t("barnForm.eggGrade")}</label>
+              <Field
+                as="select"
+                id="eggGradeId"
+                name="eggGradeId"
+                onChange={handleChange}
+              >
+                <option value="">{t("barnForm.selectEggGrade")}</option>
+                {eggGrades.map((eggGrade) => (
+                  <option
+                    key={eggGrade.id}
+                    value={eggGrade.id} // Set the 'selected' attribute based on the comparison
+                  >
+                    {eggGrade.gradeUA}
+                  </option>
+                ))}
+              </Field>
+              <ErrorMessage
+                name="eggGradeId"
+                render={(error) => <Label basic color="red" content={error} />}
+              />
+            </FormField>
+
+            <label>{t("barnForm.isDeactivated")}</label>
+            <Field
+              type="checkbox"
+              name="isDeactivated"
+              checked={barn.isDeactivated}
+              onChange={handleChange}
+            />
+
+            <Button
+              disabled={isSubmitting || !isValid || !dirty}
+              floated="right"
+              positive
+              type="submit"
+              content={t("barnForm.submit")}
+              loading={loading}
+            />
+            <Button
+              as={Link}
+              to="/barns"
+              floated="right"
+              type="button"
+              content={t("barnForm.cancel")}
+            />
+          </Form>
+        )}
+      </Formik>
     </Segment>
   );
 });
