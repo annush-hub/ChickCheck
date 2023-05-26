@@ -1,14 +1,15 @@
 import { ErrorMessage, Form, Formik } from "formik";
-import React from "react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { Button, Header, Label } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import * as Yup from "yup";
 import ValidationError from "../errors/ValidationError";
+import { useTranslation } from "react-i18next";
 
 export default observer(function RegisterForm() {
   const { userStore } = useStore();
+  const { t } = useTranslation();
   return (
     <Formik
       initialValues={{
@@ -22,27 +23,37 @@ export default observer(function RegisterForm() {
         userStore.register(values).catch((error) => setErrors({ error }))
       }
       validationSchema={Yup.object({
-        displayName: Yup.string().required("The user displayName is required"),
-        username: Yup.string().required("The user username is required"),
+        displayName: Yup.string().required(t("userFormErrors.displayName")!),
+        username: Yup.string().required(t("userFormErrors.username")!),
         email: Yup.string()
-          .required("The user email is required")
-          .email("Invalid email address"),
+          .required(t("userFormErrors.email")!)
+          .email(t("userFormErrors.invalidEmail")!),
+        bio: Yup.string().required(t("userFormErrors.bio")!),
         password: Yup.string()
-          .required("The user password is required")
+          .required(t("userFormErrors.password")!)
           .matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,}$/,
-            "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character"
+            t("userFormErrors.weakPassword")!
           ),
       })}
     >
       {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
         <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-          <Header as="h2" content="Sign up" color="teal" textAlign="center" />
-          <MyTextInput placeholder="Email" name="email" />
-          <MyTextInput placeholder="Username" name="username" />
-          <MyTextInput placeholder="Display name" name="displayName" />
-          <MyTextInput placeholder="Bio" name="bio" />
-          <MyTextInput placeholder="Password" name="password" type="password" />
+          <Header
+            as="h2"
+            content={t("homePage.register")}
+            color="teal"
+            textAlign="center"
+          />
+          <MyTextInput placeholder={t("user.email")} name="email" />
+          <MyTextInput placeholder={t("user.username")} name="username" />
+          <MyTextInput placeholder={t("user.displayName")} name="displayName" />
+          <MyTextInput placeholder={t("user.bio")} name="bio" />
+          <MyTextInput
+            placeholder={t("user.password")}
+            name="password"
+            type="password"
+          />
           <ErrorMessage
             name="error"
             render={(error) => (
@@ -61,7 +72,7 @@ export default observer(function RegisterForm() {
             disabled={!isValid || !dirty || isSubmitting}
             loading={isSubmitting}
             positive
-            content="Register"
+            content={t("homePage.register")}
             type="submit"
             fluid
           />

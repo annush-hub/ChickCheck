@@ -50,5 +50,23 @@
     "isDeactivated": "Is deactivated",
     "cancel": "Cancel",
     "submit": "Submit"
+  },
+  "user": {
+    "email": "Email",
+    "username": "Username",
+    "displayName": "Display name",
+    "bio": "Bio",
+    "password": "Password"
+  },
+  "userFormErrors": {
+    "email": "The user email is required",
+    "invalidEmail": "Invalid email address",
+    "username": "The user username is required",
+    "displayName": "The user display name is required",
+    "bio": "The user bio is required",
+    "password": "The user password is required",
+    "weakPassword": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
+    "invalidLogin": "Invalid email or password",
+    "unauthorised": "Unauthorised"
   }
 }

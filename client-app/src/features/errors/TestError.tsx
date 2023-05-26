@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button, Header, Segment } from "semantic-ui-react";
 import axios from "axios";
 import ValidationError from "./ValidationError";
+import { useTranslation } from "react-i18next";
 
 export default function TestErrors() {
   const baseUrl = "https://localhost:7080/api/";
   const [errors, setErrors] = useState(null);
+  const { t } = useTranslation();
   function handleNotFound() {
     axios
       .get(baseUrl + "buggy/not-found")
@@ -66,7 +68,7 @@ export default function TestErrors() {
           />
           <Button
             onClick={handleUnauthorised}
-            content="Unauthorised"
+            content={t("userFormErrors.unauthorised")}
             basic
             primary
           />
