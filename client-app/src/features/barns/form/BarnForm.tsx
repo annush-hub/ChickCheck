@@ -32,14 +32,10 @@ export default observer(function BarnForm() {
   });
 
   const validationSchema = Yup.object({
-    name: Yup.string().required("The barn name is required"),
-    description: Yup.string().required("The barn description is required"),
-    temperatureInCelsius: Yup.number()
-      .typeError("Temperature must be a number")
-      .positive("Temperature must be a positive number")
-      .min(1, "Temperature must be greater than zero")
-      .required("Temperature is required"),
-    eggGradeId: Yup.string().required("The barn egg Grade is required"),
+    name: Yup.string().required(t("barnFormErrors.name")!),
+    description: Yup.string().required(t("barnFormErrors.description")!),
+    temperatureInCelsius: Yup.number().min(1, t("barnFormErrors.temperature")!),
+    eggGradeId: Yup.string().required(t("barnFormErrors.eggGrade")!),
   });
 
   useEffect(() => {
@@ -88,7 +84,7 @@ export default observer(function BarnForm() {
           isSubmitting,
         }) => (
           <Form className="ui form" onSubmit={handleSubmit} autoComplete="off">
-            <MyTextInput name="name" placeholder="Name" />
+            <MyTextInput name="name" placeholder={t("barnForm.name")} />
 
             <MyTextInput
               placeholder={t("barnForm.description")}
