@@ -70,6 +70,12 @@
     "invalidLogin": "Invalid email or password",
     "unauthorised": "Unauthorised"
   },
+  "barnFormErrors": {
+    "name": "The barn name is required",
+    "description": "The barn description is required",
+    "eggGrade": "The barn Egg Grade is required",
+    "temperature": "Temperature must be greater than zero"
+  },
   "loadingComponent": {
     "loading": "Loading...",
     "loadingApp": "Loading app...",
