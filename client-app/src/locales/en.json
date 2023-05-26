@@ -1,7 +1,9 @@
 {
   "homePage": {
     "welcome": "Welcome",
-    "goToBarns": "Go to Barns"
+    "goToBarns": "Go to Barns",
+    "login": "Login",
+    "register": "Sign up"
   },
   "barnFilters": {
     "filtersTitle": "Filters",

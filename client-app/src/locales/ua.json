@@ -1,7 +1,9 @@
 {
   "homePage": {
     "welcome": "Ласкаво просимо",
-    "goToBarns": "Перейти до Амбарів"
+    "goToBarns": "Перейти до Амбарів",
+    "login": "Вхід",
+    "register": "Реєстрація"
   },
   "barnFilters": {
     "filtersTitle": "Фільтри",
