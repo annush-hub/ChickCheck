@@ -27,6 +27,11 @@ export default function BarnListItem({ barn }: Props) {
 
   const temperatureUnit = i18n.language === "en" ? "°F" : "°C";
 
+  // const displayEggGrade =
+  //   i18n.language === "en"
+  //     ? barn.egg
+  //     : barn.temperatureInCelsius;
+
   return (
     <Segment.Group>
       <Segment>
@@ -46,7 +51,9 @@ export default function BarnListItem({ barn }: Props) {
       <Segment secondary>
         <span>
           <FontAwesomeIcon icon={faEgg} />
-          {eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeUA}
+          {i18n.language === "en"
+            ? eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeEU
+            : eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeUA}
           <span> </span>
           <FontAwesomeIcon icon={faTemperatureThreeQuarters} />{" "}
           {displayTemperature} {temperatureUnit}
