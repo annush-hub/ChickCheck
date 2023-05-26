@@ -48,7 +48,9 @@ export default observer(function BarnDetailedInfo({ barn, eggGrades }: Props) {
           </Grid.Column>
           <Grid.Column width={11}>
             <span>
-              {eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeUA}
+              {i18n.language === "en"
+                ? eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeEU
+                : eggGrades.find((x) => x.id === barn.eggGradeId)?.gradeUA}
             </span>
           </Grid.Column>
         </Grid>
