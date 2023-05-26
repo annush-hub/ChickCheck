@@ -21,6 +21,7 @@ export default class UserStore {
       store.commonStore.setToken(user.token);
       runInAction(() => (this.user = user));
       router.navigate("/barns");
+      store.modalStore.closeModal();
     } catch (error) {
       throw error;
     }
@@ -28,8 +29,16 @@ export default class UserStore {
 
   logout = () => {
     store.commonStore.setToken(null);
-    localStorage.removeItem("jwt");
     this.user = null;
     router.navigate("/");
+  };
+
+  getUser = async () => {
+    try {
+      const user = await agent.Account.current();
+      runInAction(() => (this.user = user));
+    } catch (error) {
+      console.log(error);
+    }
   };
 }

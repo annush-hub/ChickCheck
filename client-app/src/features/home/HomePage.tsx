@@ -5,9 +5,10 @@ import LanguageSelector from "../LanguageSelector";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import LoginForm from "../users/LoginForm";
 
 export default observer(function HomePage() {
-  const { userStore } = useStore();
+  const { userStore, modalStore } = useStore();
   const { isLoggedIn } = userStore;
   const { t } = useTranslation();
   return (
@@ -26,8 +27,21 @@ export default observer(function HomePage() {
           </>
         ) : (
           <>
-            <Button as={Link} to="/login" size="huge" inverted>
+            <Button
+              onClick={() => modalStore.openModal(<LoginForm />)}
+              size="huge"
+              inverted
+            >
               Login
+            </Button>
+            <Button
+              onClick={() =>
+                modalStore.openModal(<Header content="Register" />)
+              }
+              size="huge"
+              inverted
+            >
+              Register
             </Button>
           </>
         )}
