@@ -14,7 +14,7 @@ export default function HomePage() {
           ChickCheck
         </Header>
         <Header as="h2" content={t("homePage.welcome")} inverted />
-        <Button as={Link} to="/barns" size="huge" inverted>
+        <Button as={Link} to="/login" size="huge" inverted>
           {t("homePage.goToBarns")}
         </Button>
         <div style={{ marginTop: 25 }}>

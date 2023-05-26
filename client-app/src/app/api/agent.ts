@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { EggStorage } from "../models/storage";
+import { User, UserFormValues } from "../models/user";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -80,10 +81,18 @@ const Storages = {
   list: () => requests.get<EggStorage[]>("/storages"),
 };
 
+const Account = {
+  current: () => requests.get<User>("/account"),
+  register: (user: UserFormValues) =>
+    requests.post<User>("/account/registerUser", user),
+  login: (user: UserFormValues) => requests.post<User>("/account/login", user),
+};
+
 const agent = {
   Barns,
   EggGrades,
   Storages,
+  Account,
 };
 
 export default agent;

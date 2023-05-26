@@ -8,6 +8,7 @@ import TestErrors from "../../features/errors/TestError";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
 import StorageDashboard from "../../features/storages/dashboard/StorageDashboard";
+import LoginForm from "../../features/users/LoginForm";
 
 export const routes: RouteObject[] = [
   {
@@ -19,6 +20,7 @@ export const routes: RouteObject[] = [
       { path: "barns/:id", element: <BarnDetails /> },
       { path: "createBarn", element: <BarnForm key="create" /> },
       { path: "edit/:id", element: <BarnForm key="edit" /> },
+      { path: "login", element: <LoginForm /> },
       { path: "errors", element: <TestErrors /> },
       { path: "not-found", element: <NotFound /> },
       { path: "server-error", element: <ServerError /> },
