@@ -26,7 +26,8 @@
   "navBar": {
     "barns": "Barns",
     "storages": "Storages",
-    "createBarn": "Create Barn"
+    "createBarn": "Create Barn",
+    "logout": "Logout"
   },
   "barnFeeders": {
     "title": "Barn Feeders",

@@ -26,7 +26,8 @@
   "navBar": {
     "barns": "Амбари",
     "storages": "Склади",
-    "createBarn": "Створити амбар"
+    "createBarn": "Створити амбар",
+    "logout": "Вийти"
   },
   "barnFeeders": {
     "title": "Годівниці амбару",

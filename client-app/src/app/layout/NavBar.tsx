@@ -51,7 +51,7 @@ export default observer(function NavBar() {
           </Button.Group>
         </Menu.Item>
         <Menu.Item position="right">
-          <Button content="Logout" onClick={logout} icon="power" />
+          <Button content={t("navBar.logout")!} onClick={logout} icon="power" />
         </Menu.Item>
       </Container>
     </Menu>
