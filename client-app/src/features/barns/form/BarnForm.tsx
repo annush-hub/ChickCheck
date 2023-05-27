@@ -67,13 +67,6 @@ export default observer(function BarnForm() {
   if (loadingiInitial)
     return <LoadingComponent content={t("loadingComponent.loadingBarn")} />;
 
-  const handleLanguageChange = () => {
-    setBarn((prevBarn) => ({
-      ...prevBarn,
-      temperatureInCelsius: prevBarn.temperatureInCelsius,
-      temperatureInFahrenheit: prevBarn.temperatureInFahrenheit,
-    }));
-  };
   function handleFormSubmit(barn: Barn) {
     if (!barn.id) {
       barn.id = uuid();
