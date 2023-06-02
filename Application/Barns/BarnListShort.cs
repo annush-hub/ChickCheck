@@ -2,6 +2,7 @@
 using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -34,7 +35,7 @@ namespace Application.Barns
             public async Task<Result<PagedList<BarnFeedersDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query =  _context.Barns
-                    .OrderBy(b => b.Name)
+                    .OrderByDescending(b => b.EggGradeId)
                     .ProjectTo<BarnFeedersDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 

@@ -7,6 +7,7 @@ import { store } from "../stores/store";
 import { EggStorage } from "../models/storage";
 import { User, UserFormValues } from "../models/user";
 import { Feeder } from "../models/feeder";
+import { PaginatedResult } from "../models/pagination";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -27,6 +28,14 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   async (response) => {
     await sleep(1000);
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResult(
+        response.data,
+        JSON.parse(pagination)
+      );
+      return response as AxiosResponse<PaginatedResult<any>>;
+    }
     return response;
   },
   (error: AxiosError) => {
@@ -76,7 +85,10 @@ const requests = {
 };
 
 const Barns = {
-  list: () => requests.get<Barn[]>("/barns/short"),
+  list: (params: URLSearchParams) =>
+    axios
+      .get<PaginatedResult<Barn[]>>("/barns/short", { params })
+      .then(responseBody),
   details: (id: string) => requests.get<Barn>(`/barns/${id}`),
   create: (barn: Barn) => requests.post<void>("/barns", barn),
   update: (barn: Barn) => requests.put<void>(`/barns/${barn.id}`, barn),

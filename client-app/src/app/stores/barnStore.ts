@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { Barn } from "../models/barn";
 import agent from "../api/agent";
 import { v4 as uuid } from "uuid";
+import { Pagination, PagingParams } from "../models/pagination";
 
 export default class BarnStore {
   barnRegistry = new Map<string, Barn>();
@@ -9,15 +10,29 @@ export default class BarnStore {
   editMode = false;
   loading = false;
   loadingiInitial = false;
+  pagination: Pagination | null = null;
+  pagingParams = new PagingParams();
 
   constructor() {
     makeAutoObservable(this);
   }
 
   get barnsList() {
-    return Array.from(this.barnRegistry.values()).sort((a, b) =>
-      a.name.localeCompare(b.name)
-    );
+    // return Array.from(this.barnRegistry.values()).sort((a, b) =>
+    //   a.name.localeCompare(b.name)
+    // );
+    return Array.from(this.barnRegistry.values());
+  }
+
+  setPagingParams = (pagingParams: PagingParams) => {
+    this.pagingParams = pagingParams;
+  };
+
+  get axiosParams() {
+    const params = new URLSearchParams();
+    params.append("pageNumber", this.pagingParams.pageNumber.toString());
+    params.append("pageSize", this.pagingParams.pageSize.toString());
+    return params;
   }
 
   get groupedBarns() {
@@ -37,15 +52,20 @@ export default class BarnStore {
   loadBarns = async () => {
     this.setLoadingInitial(true);
     try {
-      const barns = await agent.Barns.list();
-      barns.forEach((barn) => {
+      const result = await agent.Barns.list(this.axiosParams);
+      result.data.forEach((barn) => {
         this.setBarn(barn);
       });
+      this.setPagination(result.pagination);
       this.setLoadingInitial(false);
     } catch (error) {
       console.log(error);
       this.setLoadingInitial(false);
     }
+  };
+
+  setPagination = (pagination: Pagination) => {
+    this.pagination = pagination;
   };
 
   loadBarn = async (id: string) => {
