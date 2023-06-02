@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { Barn } from "../models/barn";
 import agent from "../api/agent";
 import { v4 as uuid } from "uuid";
@@ -12,9 +12,18 @@ export default class BarnStore {
   loadingiInitial = false;
   pagination: Pagination | null = null;
   pagingParams = new PagingParams();
+  predicate = new Map().set("all", true);
 
   constructor() {
     makeAutoObservable(this);
+    reaction(
+      () => this.predicate.keys(),
+      () => {
+        this.pagingParams = new PagingParams();
+        this.barnRegistry.clear();
+        this.loadBarns();
+      }
+    );
   }
 
   get barnsList() {
@@ -28,10 +37,35 @@ export default class BarnStore {
     this.pagingParams = pagingParams;
   };
 
+  setPredicate = (predicate: string, value: boolean) => {
+    const resetPredicate = () => {
+      this.predicate.forEach((value, key) => {
+        this.predicate.delete(key);
+      });
+    };
+    switch (predicate) {
+      case "all":
+        resetPredicate();
+        this.predicate.set("all", true);
+        break;
+      case "isActive":
+        resetPredicate();
+        this.predicate.set("isActive", true);
+        break;
+      case "isInactive":
+        resetPredicate();
+        this.predicate.set("isInactive", true);
+        break;
+    }
+  };
+
   get axiosParams() {
     const params = new URLSearchParams();
     params.append("pageNumber", this.pagingParams.pageNumber.toString());
     params.append("pageSize", this.pagingParams.pageSize.toString());
+    this.predicate.forEach((value, key) => {
+      params.append(key, value);
+    });
     return params;
   }
 

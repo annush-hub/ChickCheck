@@ -8,6 +8,7 @@ import BarnFilters from "./BarnFilters";
 import { useTranslation } from "react-i18next";
 import { PagingParams } from "../../../app/models/pagination";
 import InfiniteScroll from "react-infinite-scroller";
+import BarnListItemPlaceholder from "./BarnListItemPlaceholder";
 
 export default observer(function BarnDashboard() {
   const { barnStore, eggGradeStore } = useStore();
@@ -29,24 +30,28 @@ export default observer(function BarnDashboard() {
     eggGradeStore.loadEggGrades();
   }, [eggGradeStore]);
 
-  if (barnStore.loadingiInitial && !loadingNext)
-    return <LoadingComponent content={t("loadingComponent.loadingBarns")} />;
-
   return (
     <Grid>
       <Grid.Column width="10">
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={handleGetNext}
-          hasMore={
-            !loadingNext &&
-            !!pagination &&
-            pagination.currentPage < pagination.totalPages
-          }
-          initialLoad={false}
-        >
-          <BarnList />
-        </InfiniteScroll>
+        {barnStore.loadingiInitial && !loadingNext ? (
+          <>
+            <BarnListItemPlaceholder />
+            <BarnListItemPlaceholder />
+          </>
+        ) : (
+          <InfiniteScroll
+            pageStart={0}
+            loadMore={handleGetNext}
+            hasMore={
+              !loadingNext &&
+              !!pagination &&
+              pagination.currentPage < pagination.totalPages
+            }
+            initialLoad={false}
+          >
+            <BarnList />
+          </InfiniteScroll>
+        )}
       </Grid.Column>
       <GridColumn width="6">
         <BarnFilters />
