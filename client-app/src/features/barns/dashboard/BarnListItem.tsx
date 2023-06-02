@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Item, Segment } from "semantic-ui-react";
+import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { Barn } from "../../../app/models/barn";
 import { Link } from "react-router-dom";
 import { useStore } from "../../../app/stores/store";
@@ -27,9 +27,18 @@ export default function BarnListItem({ barn }: Props) {
 
   const temperatureUnit = i18n.language === "en" ? "°F" : "°C";
 
+  const getStatusColor = () => {
+    return barn.isDeactivated ? "red" : "green";
+  };
+
   return (
     <Segment.Group>
       <Segment>
+        <Label color={getStatusColor()}>
+          {!barn.isDeactivated
+            ? t("storageList.working")
+            : t("storageList.notWorking")}
+        </Label>
         <Item.Group>
           <Item>
             <Item.Content>

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Item, Placeholder, Segment } from "semantic-ui-react";
+import { Button, Item, Label, Placeholder, Segment } from "semantic-ui-react";
 
 export default function BarnListItemPlaceholder() {
   const { t } = useTranslation();
@@ -9,6 +9,9 @@ export default function BarnListItemPlaceholder() {
       <Placeholder fluid style={{ marginTop: 25 }}>
         <Segment.Group>
           <Segment style={{ minHeight: 70 }}>
+            <Label>
+              <Placeholder.Line />
+            </Label>
             <Item.Group>
               <Item>
                 <Item.Content>
