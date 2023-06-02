@@ -15,9 +15,12 @@ namespace Application.Barns
 {
     public class BarnListShort
     {
-        public class Query : IRequest<Result<List<BarnFeedersDto>>> { }
+        public class Query : IRequest<Result<PagedList<BarnFeedersDto>>> 
+        {
+            public PagingParams Params { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<List<BarnFeedersDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<BarnFeedersDto>>>
         {
             private readonly AppDbContext _context;
             private readonly IMapper _mapper;
@@ -28,12 +31,17 @@ namespace Application.Barns
                 _mapper = mapper;
             }
 
-            public async Task<Result<List<BarnFeedersDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<BarnFeedersDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var barns = await _context.Barns
+                var query =  _context.Barns
+                    .OrderBy(b => b.Name)
                     .ProjectTo<BarnFeedersDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken: cancellationToken);
-                return Result<List<BarnFeedersDto>>.Success(barns);
+                    .AsQueryable();
+
+                return Result<PagedList<BarnFeedersDto>>.Success(
+                    await PagedList<BarnFeedersDto>.CreateAsync(query, request.Params.PageNumber,
+                        request.Params.PageSize)
+                );
             }
         }
     }
