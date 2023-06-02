@@ -13,7 +13,7 @@ using System.Diagnostics;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
 
     public class BarnsController : BaseApiController

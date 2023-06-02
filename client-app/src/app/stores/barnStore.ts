@@ -27,9 +27,6 @@ export default class BarnStore {
   }
 
   get barnsList() {
-    // return Array.from(this.barnRegistry.values()).sort((a, b) =>
-    //   a.name.localeCompare(b.name)
-    // );
     return Array.from(this.barnRegistry.values());
   }
 

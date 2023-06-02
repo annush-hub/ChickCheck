@@ -1,11 +1,10 @@
 import React, { FormEvent, FormEventHandler, useState } from "react";
 import { useStore } from "../../app/stores/store";
-import { FormProps, Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { Feeder } from "../../app/models/feeder";
 import { v4 as uuid } from "uuid";
-import LoadingComponent from "../../app/layout/LoadingComponent";
 
 interface Props {
   onCancel: () => void;
@@ -18,6 +17,7 @@ export default function FeederForm({ onCancel }: Props) {
   const { id } = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [feeder, setFeeder] = useState<Feeder>({
     id: "",
@@ -36,7 +36,13 @@ export default function FeederForm({ onCancel }: Props) {
     };
 
     createFeeder(newFeeder, id!);
+    setFormSubmitted(true);
+    navigate("/barns");
   };
+
+  if (formSubmitted) {
+    return null;
+  }
 
   return (
     <Segment clearing>
@@ -53,16 +59,6 @@ export default function FeederForm({ onCancel }: Props) {
             setFeeder({ ...feeder, capacity: parseInt(e.target.value) })
           }
         />
-        <Form.Input
-          label={t("barnFeeders.fullness")}
-          type="number"
-          placeholder={t("barnFeeders.fullness")}
-          name="fullness"
-          onChange={(e) =>
-            setFeeder({ ...feeder, fullness: parseInt(e.target.value) })
-          }
-        />
-
         <Button
           floated="right"
           positive
