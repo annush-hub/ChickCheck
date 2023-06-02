@@ -1,5 +1,6 @@
 ﻿using Application.Barns;
 using Application.Barns.Dtos;
+using Application.Core;
 using Application.Storages;
 using Domain;
 using MediatR;
@@ -12,7 +13,7 @@ using System.Diagnostics;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     [ApiController]
 
     public class BarnsController : BaseApiController
@@ -26,10 +27,10 @@ namespace API.Controllers
         }
 
         [HttpGet("short")]
-        public async Task<ActionResult<List<CreateBarnDto>>> GetBarnsShort()
+        public async Task<ActionResult<List<CreateBarnDto>>> GetBarnsShort([FromQuery]PagingParams param)
         {
-            var result = await Mediator.Send(new BarnListShort.Query());
-            return HandleResult(result);
+            var result = await Mediator.Send(new BarnListShort.Query {Params = param});
+            return HandlePagedResult(result);
         }
 
         [HttpGet("{id}")]
