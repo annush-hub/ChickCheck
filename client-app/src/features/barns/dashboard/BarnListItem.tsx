@@ -27,11 +27,6 @@ export default function BarnListItem({ barn }: Props) {
 
   const temperatureUnit = i18n.language === "en" ? "°F" : "°C";
 
-  // const displayEggGrade =
-  //   i18n.language === "en"
-  //     ? barn.egg
-  //     : barn.temperatureInCelsius;
-
   return (
     <Segment.Group>
       <Segment>

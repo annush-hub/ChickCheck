@@ -6,6 +6,7 @@ import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { EggStorage } from "../models/storage";
 import { User, UserFormValues } from "../models/user";
+import { Feeder } from "../models/feeder";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -83,6 +84,7 @@ const Barns = {
 
 const EggGrades = {
   list: () => requests.get<EggGrade[]>("/eggGrades"),
+  details: (id: string) => requests.get<EggGrade>(`/eggGrades/${id}`),
 };
 
 const Storages = {
@@ -96,11 +98,16 @@ const Account = {
   login: (user: UserFormValues) => requests.post<User>("/account/login", user),
 };
 
+const Feeders = {
+  create: (feeder: Feeder) => requests.post<void>("/feeders", feeder),
+};
+
 const agent = {
   Barns,
   EggGrades,
   Storages,
   Account,
+  Feeders,
 };
 
 export default agent;

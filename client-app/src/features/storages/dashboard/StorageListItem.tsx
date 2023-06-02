@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEgg, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { EggStorage } from "../../../app/models/storage";
 import { useTranslation } from "react-i18next";
+import i18n from "../../../i18n";
 
 interface Props {
   storage: EggStorage;
@@ -42,12 +43,21 @@ export default function StorageListItem({ storage }: Props) {
         </span>
       </Segment>
       <Segment>
-        {storage.eggGrades.map((eggGrade) => (
-          <Label key={eggGrade.id}>
-            {" "}
-            <FontAwesomeIcon icon={faEgg} /> {eggGrade.gradeUA}
-          </Label>
-        ))}
+        {i18n.language === "en"
+          ? storage.eggGrades.map((eggGrade) => (
+              <Label key={eggGrade.id}>
+                {" "}
+                <FontAwesomeIcon icon={faEgg} /> {eggGrade.gradeEU}
+              </Label>
+            ))
+          : storage.eggGrades.map((eggGrade) => (
+              <Label key={eggGrade.id}>
+                {" "}
+                <FontAwesomeIcon icon={faEgg} /> {eggGrade.gradeUA}
+              </Label>
+            ))}
+
+        <span> </span>
       </Segment>
     </Segment.Group>
   );

@@ -4,6 +4,7 @@ import { Barn } from "../../../app/models/barn";
 import { Button, Grid, GridColumn } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
 import FeederForm from "../../feeders/FeederForm";
+import { v4 as uuid } from "uuid";
 
 interface Props {
   barn: Barn;
@@ -12,10 +13,12 @@ interface Props {
 export default function BarnFeeders({ barn }: Props) {
   const { t } = useTranslation();
   const [isShown, setIsShown] = useState(false);
+  const [reloadKey, setReloadKey] = useState("");
 
   const toggleFormVisibility = () => {
     setIsShown((current) => !current);
   };
+
   return (
     <>
       <h3>{t("barnFeeders.title")}</h3>

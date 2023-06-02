@@ -58,7 +58,7 @@ export default class BarnStore {
       try {
         barn = await agent.Barns.details(id);
         this.setBarn(barn);
-        this.selectedBarn = barn;
+        // this.selectedBarn = barn;
         runInAction(() => (this.selectedBarn = barn));
         this.setLoadingInitial(false);
         return barn;
