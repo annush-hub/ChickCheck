@@ -27,7 +27,7 @@ namespace API.Controllers
         }
 
         [HttpGet("short")]
-        public async Task<ActionResult<List<CreateBarnDto>>> GetBarnsShort([FromQuery]PagingParams param)
+        public async Task<ActionResult<List<CreateBarnDto>>> GetBarnsShort([FromQuery]BarnParams param)
         {
             var result = await Mediator.Send(new BarnListShort.Query {Params = param});
             return HandlePagedResult(result);

@@ -18,7 +18,7 @@ namespace Application.Barns
     {
         public class Query : IRequest<Result<PagedList<BarnFeedersDto>>> 
         {
-            public PagingParams Params { get; set; }
+            public BarnParams Params { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<PagedList<BarnFeedersDto>>>
@@ -38,6 +38,17 @@ namespace Application.Barns
                     .OrderByDescending(b => b.EggGradeId)
                     .ProjectTo<BarnFeedersDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
+
+                if(request.Params.IsActive && !request.Params.IsInactive)
+                {
+                    query = query.Where(x => x.IsDeactivated == false);
+                }
+
+                if (request.Params.IsInactive && !request.Params.IsActive)
+                {
+                    query = query.Where(x => x.IsDeactivated == true);
+                }
+
 
                 return Result<PagedList<BarnFeedersDto>>.Success(
                     await PagedList<BarnFeedersDto>.CreateAsync(query, request.Params.PageNumber,
