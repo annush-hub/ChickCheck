@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Barn } from "../../../app/models/barn";
 import { Label, Table } from "semantic-ui-react";
 import { Feeder } from "../../../app/models/feeder";
@@ -10,6 +10,7 @@ interface Props {
 
 export default function FeedersTable({ barn }: Props) {
   const { t } = useTranslation();
+
   return (
     <div>
       <Table celled>
@@ -29,7 +30,6 @@ export default function FeedersTable({ barn }: Props) {
                 {feeder.capacity} {t("unionsOfMeasurement.capacity")}
               </Table.Cell>
               <Table.Cell>{feeder.fullness} %</Table.Cell>
-              {/* <Table.Cell>{feeder.isInUse ? "Yes" : "No"}</Table.Cell> */}
               <Table.Cell>
                 {feeder.fullness <= 0 && (
                   <Label as="a" color="red" ribbon="right">
@@ -48,4 +48,7 @@ export default function FeedersTable({ barn }: Props) {
       </Table>
     </div>
   );
+}
+function fetchData() {
+  throw new Error("Function not implemented.");
 }

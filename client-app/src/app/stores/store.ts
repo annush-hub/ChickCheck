@@ -5,6 +5,7 @@ import CommonStore from "./commonStore";
 import StorageStore from "./storageStore";
 import UserStore from "./userStore";
 import ModalStore from "./modalStore";
+import FeederStore from "./feederStore";
 
 interface Store {
   barnStore: BarnStore;
@@ -13,6 +14,7 @@ interface Store {
   commonStore: CommonStore;
   userStore: UserStore;
   modalStore: ModalStore;
+  feederStore: FeederStore;
 }
 
 export const store: Store = {
@@ -22,6 +24,7 @@ export const store: Store = {
   commonStore: new CommonStore(),
   userStore: new UserStore(),
   modalStore: new ModalStore(),
+  feederStore: new FeederStore(),
 };
 
 export const StoreContext = createContext(store);
